@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-#TODO: update after macOS Catalina, default mac shell: bash is changing to zsh
-
-###########################
+###############################################################################
 # This script installs the dotfiles and runs all other system configuration scripts
 # @author Adam Eivy
-###########################
+###############################################################################
 
 # include my library helpers for colorized echo and require_brew, etc
 source ./lib_sh/echos.sh
@@ -22,9 +20,9 @@ if [ $? -ne 0 ]; then
   # Keep-alive: update existing sudo time stamp until the script has finished
   while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-  bot "Do you want me to setup this machine to allow you to run sudo without a password?\nPlease read here to see what I am doing:\nhttp://wiki.summercode.com/sudo_without_a_password_in_mac_os_x \n"
+  # bot "Do you want me to setup this machine to allow you to run sudo without a password?\nPlease read here to see what I am doing:\nhttp://wiki.summercode.com/sudo_without_a_password_in_mac_os_x \n"
 
-  read -r -p "Make sudo passwordless? [y|N] " response
+  # read -r -p "Make sudo passwordless? [y|N] " response
 
   if [[ $response =~ (yes|y|Y) ]];then
       if ! grep -q "#includedir /private/etc/sudoers.d" /etc/sudoers; then
@@ -35,10 +33,10 @@ if [ $? -ne 0 ]; then
   fi
 fi
 
-# ###########################################################
-# /etc/hosts -- spyware/ad blocking
-# ###########################################################
-read -r -p "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file) [y|N] " response
+###############################################################################
+# Better /etc/hosts
+###############################################################################
+read -r -p "(Recommended) Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file) [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
     action "cp /etc/hosts /etc/hosts.backup"
     sudo cp /etc/hosts /etc/hosts.backup
@@ -51,10 +49,9 @@ else
     ok "skipped";
 fi
 
-# ###########################################################
-# Git Config
-# ###########################################################
-bot "OK, now I am going to update the .gitconfig for your user info:"
+###############################################################################
+# GitHub Config
+###############################################################################
 grep 'user = GITHUBUSER' ./homedir/.gitconfig > /dev/null 2>&1
 if [[ $? = 0 ]]; then
     read -r -p "What is your git username? " githubuser
@@ -104,7 +101,6 @@ if [[ $? = 0 ]]; then
     fi
   fi
 
-
   running "replacing items in .gitconfig with your info ($COL_YELLOW$fullname, $email, $githubuser$COL_RESET)"
 
   # test if gnu-sed or MacOS sed
@@ -122,34 +118,6 @@ if [[ $? = 0 ]]; then
     bot "looks like you are already using gnu-sed. woot!"
     sed -i 's/GITHUBEMAIL/'$email'/' ./homedir/.gitconfig
     sed -i 's/GITHUBUSER/'$githubuser'/' ./homedir/.gitconfig
-  fi
-fi
-
-# ###########################################################
-# Wallpaper
-# ###########################################################
-MD5_NEWWP=$(md5 img/wallpaper.jpg | awk '{print $4}')
-MD5_OLDWP=$(md5 /System/Library/CoreServices/DefaultDesktop.jpg | awk '{print $4}')
-if [[ "$MD5_NEWWP" != "$MD5_OLDWP" ]]; then
-  read -r -p "Do you want to use the project's custom desktop wallpaper? [y|N] " response
-  if [[ $response =~ (yes|y|Y) ]]; then
-    running "Set a custom wallpaper image"
-    # rm -rf ~/Library/Application Support/Dock/desktoppicture.db
-    bot "I will backup system wallpapers in ~/.dotfiles/img/"
-    sudo cp /System/Library/CoreServices/DefaultDesktop.jpg img/DefaultDesktop.jpg > /dev/null 2>&1
-    sudo cp /Library/Desktop\ Pictures/El\ Capitan.jpg img/El\ Capitan.jpg > /dev/null 2>&1
-    sudo cp /Library/Desktop\ Pictures/Sierra.jpg img/Sierra.jpg > /dev/null 2>&1
-    sudo cp /Library/Desktop\ Pictures/Sierra\ 2.jpg img/Sierra\ 2.jpg > /dev/null 2>&1
-    sudo rm -f /System/Library/CoreServices/DefaultDesktop.jpg > /dev/null 2>&1
-    sudo rm -f /Library/Desktop\ Pictures/El\ Capitan.jpg > /dev/null 2>&1
-    sudo rm -f /Library/Desktop\ Pictures/Sierra.jpg > /dev/null 2>&1
-    sudo rm -f /Library/Desktop\ Pictures/Sierra\ 2.jpg > /dev/null 2>&1
-    sudo cp ./img/wallpaper.jpg /System/Library/CoreServices/DefaultDesktop.jpg;
-    sudo cp ./img/wallpaper.jpg /Library/Desktop\ Pictures/Sierra.jpg;
-    sudo cp ./img/wallpaper.jpg /Library/Desktop\ Pictures/Sierra\ 2.jpg;
-    sudo cp ./img/wallpaper.jpg /Library/Desktop\ Pictures/El\ Capitan.jpg;ok
-  else
-    ok "skipped"
   fi
 fi
 
@@ -180,10 +148,10 @@ if ! xcode-select --print-path &> /dev/null; then
 
 fi
 
-# ###########################################################
-# install homebrew (CLI Packages)
-# ###########################################################
-running "checking homebrew..."
+###############################################################################
+# Bootstrap Homebrew (CLI Packages)
+###############################################################################
+running "checking homebrew install"
 brew_bin=$(which brew) 2>&1 > /dev/null
 if [[ $? != 0 ]]; then
   action "installing homebrew"
@@ -213,6 +181,9 @@ fi
 mkdir -p ~/Library/Caches/Homebrew/Formula
 brew doctor
 
+###############################################################################
+# Bootstrap Shell Environment
+###############################################################################
 # skip those GUI clients, git command-line all the way
 require_brew git
 # update zsh to latest
@@ -226,9 +197,14 @@ CURRENTSHELL=$(dscl . -read /Users/$USER UserShell | awk '{print $2}')
 if [[ "$CURRENTSHELL" != "/usr/local/bin/zsh" ]]; then
   bot "setting newer homebrew zsh (/usr/local/bin/zsh) as your shell (password required)"
   # sudo bash -c 'echo "/usr/local/bin/zsh" >> /etc/shells'
-  # chsh -s /usr/local/bin/zsh
-  sudo dscl . -change /Users/$USER UserShell $SHELL /usr/local/bin/zsh > /dev/null 2>&1
+  chsh -s /usr/local/bin/zsh
+  # sudo dscl . -change /Users/$USER UserShell $SHELL /usr/local/bin/zsh > /dev/null 2>&1
   ok
+fi
+
+# Install oh-my-zsh + Powerlevel9K
+if [ ! -n "$ZSH"]; then
+  ZSH=~/.dotfiles/oh-my-zsh
 fi
 
 if [[ ! -d "./oh-my-zsh/custom/themes/powerlevel9k" ]]; then
@@ -312,12 +288,14 @@ require_nvm stable
 # always pin versions (no surprises, consistent dev/build machines)
 npm config set save-exact true
 
-#####################################
-# Now we can switch to node.js mode
+###############################################################################
+# Install configured brew apps and casks
+#
+# Switch to node.js mode
 # for better maintainability and
 # easier configuration via
 # JSON files and inquirer prompts
-#####################################
+###############################################################################
 
 bot "installing npm tools needed to run this project..."
 npm install
@@ -350,7 +328,7 @@ osascript -e 'tell application "System Preferences" to quit'
 ok
 
 ##############################################################################
-# Security                                                                   #
+# Security
 ##############################################################################
 # Based on:
 # https://github.com/drduh/macOS-Security-and-Privacy-Guide
@@ -451,7 +429,7 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -boo
 # defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 ###############################################################################
-# SSD-specific tweaks                                                         #
+# SSD-specific tweaks
 ###############################################################################
 
 # disablelocal is no longer used, check man tmutil for more info
@@ -469,10 +447,10 @@ running "…and make sure it can’t be rewritten"
 sudo chflags uchg /Private/var/vm/sleepimage;ok
 
 #running "Disable the sudden motion sensor as it’s not useful for SSDs"
-# sudo pmset -a sms 0;ok
+sudo pmset -a sms 0;ok
 
 ################################################
-# Optional / Experimental                      #
+# Optional / Experimental
 ################################################
 
 # running "Set computer name (as done via System Preferences → Sharing)"
@@ -530,10 +508,10 @@ sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.serve
 # file=/Applications/Dropbox.app/Contents/Resources/emblem-dropbox-uptodate.icns
 # [ -e "${file}" ] && mv -f "${file}" "${file}.bak";ok
 
-# running "Wipe all (default) app icons from the Dock"
-# # This is only really useful when setting up a new Mac, or if you don’t use
-# # the Dock to launch apps.
-# defaults write com.apple.dock persistent-apps -array "";ok
+running "Wipe all (default) app icons from the Dock"
+# This is only really useful when setting up a new Mac, or if you don’t use
+# the Dock to launch apps.
+defaults write com.apple.dock persistent-apps -array "";ok
 
 #running "Enable the 2D Dock"
 #defaults write com.apple.dock no-glass -bool true;ok
@@ -545,7 +523,6 @@ sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.serve
 #defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}';ok
 #running "Add a spacer to the right side of the Dock (where the Trash is)"
 #defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}';ok
-
 
 ################################################
 bot "Standard System Changes"
@@ -646,7 +623,6 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false;ok
 
 running "Disable smart dashes as they’re annoying when typing code"
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false;ok
-
 
 ###############################################################################
 bot "Trackpad, mouse, keyboard, Bluetooth accessories, and input"
@@ -793,8 +769,8 @@ defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true;ok
 
 # Issue on macOS Mojave, for more info
 # check https://github.com/mathiasbynens/dotfiles/issues/865
-# running "Show the ~/Library folder"
-# chflags nohidden ~/Library;ok
+running "Show the ~/Library folder"
+chflags nohidden ~/Library;ok
 
 running "Expand the following File Info panes: “General”, “Open with”, and “Sharing & Permissions”"
 defaults write com.apple.finder FXInfoPanesExpanded -dict \
@@ -889,12 +865,12 @@ bot "Configuring Hot Corners"
 # 11: Launchpad
 # 12: Notification Center
 
-running "Top left screen corner → Mission Control"
-defaults write com.apple.dock wvous-tl-corner -int 2
-defaults write com.apple.dock wvous-tl-modifier -int 0;ok
-running "Top right screen corner → Desktop"
-defaults write com.apple.dock wvous-tr-corner -int 4
-defaults write com.apple.dock wvous-tr-modifier -int 0;ok
+# running "Top left screen corner → Mission Control"
+# defaults write com.apple.dock wvous-tl-corner -int 2
+# defaults write com.apple.dock wvous-tl-modifier -int 0;ok
+# running "Top right screen corner → Desktop"
+# defaults write com.apple.dock wvous-tr-corner -int 4
+# defaults write com.apple.dock wvous-tr-modifier -int 0;ok
 running "Bottom right screen corner → Start screen saver"
 defaults write com.apple.dock wvous-br-corner -int 5
 defaults write com.apple.dock wvous-br-modifier -int 0;ok
@@ -944,27 +920,26 @@ defaults write NSGlobalDomain WebKitDeveloperExtras -bool true;ok
 bot "Configuring Mail"
 ###############################################################################
 
+# running "Disable send and reply animations in Mail.app"
+# defaults write com.apple.mail DisableReplyAnimations -bool true
+# defaults write com.apple.mail DisableSendAnimations -bool true;ok
 
-running "Disable send and reply animations in Mail.app"
-defaults write com.apple.mail DisableReplyAnimations -bool true
-defaults write com.apple.mail DisableSendAnimations -bool true;ok
+# running "Copy email addresses as 'foo@example.com' instead of 'Foo Bar <foo@example.com>' in Mail.app"
+# defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false;ok
 
-running "Copy email addresses as 'foo@example.com' instead of 'Foo Bar <foo@example.com>' in Mail.app"
-defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false;ok
+# running "Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app"
+# defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" -string "@\\U21a9";ok
 
-running "Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app"
-defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" -string "@\\U21a9";ok
+# running "Display emails in threaded mode, sorted by date (oldest at the top)"
+# defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
+# defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
+# defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date";ok
 
-running "Display emails in threaded mode, sorted by date (oldest at the top)"
-defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
-defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
-defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date";ok
+# running "Disable inline attachments (just show the icons)"
+# defaults write com.apple.mail DisableInlineAttachmentViewing -bool true;ok
 
-running "Disable inline attachments (just show the icons)"
-defaults write com.apple.mail DisableInlineAttachmentViewing -bool true;ok
-
-running "Disable automatic spell checking"
-defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled";ok
+# running "Disable automatic spell checking"
+# defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled";ok
 
 ###############################################################################
 bot "Spotlight"
@@ -1011,9 +986,9 @@ sudo mdutil -i on / > /dev/null;ok
 bot "Terminal & iTerm2"
 ###############################################################################
 
-# running "Only use UTF-8 in Terminal.app"
-# defaults write com.apple.terminal StringEncodings -array 4;ok
-#
+running "Only use UTF-8 in Terminal.app"
+defaults write com.apple.terminal StringEncodings -array 4;ok
+
 # running "Use a modified version of the Solarized Dark theme by default in Terminal.app"
 # TERM_PROFILE='Solarized Dark xterm-256color';
 # CURRENT_PROFILE="$(defaults read com.apple.terminal 'Default Window Settings')";
@@ -1024,7 +999,7 @@ bot "Terminal & iTerm2"
 # 	defaults write com.apple.terminal 'Startup Window Settings' -string "${TERM_PROFILE}";
 # fi;
 
-#running "Enable “focus follows mouse” for Terminal.app and all X11 apps"
+running "Enable “focus follows mouse” for Terminal.app and all X11 apps"
 # i.e. hover over a window and start `typing in it without clicking first
 defaults write com.apple.terminal FocusFollowsMouse -bool true
 #defaults write org.x.X11 wm_ffm -bool true;ok
@@ -1036,12 +1011,12 @@ open "./configs/Solarized Dark Patch.itermcolors";ok
 
 running "Don’t display the annoying prompt when quitting iTerm"
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false;ok
-running "hide tab title bars"
-defaults write com.googlecode.iterm2 HideTab -bool true;ok
+# running "hide tab title bars"
+# defaults write com.googlecode.iterm2 HideTab -bool true;ok
 running "set system-wide hotkey to show/hide iterm with ^\`"
 defaults write com.googlecode.iterm2 Hotkey -bool true;ok
-running "hide pane titles in split panes"
-defaults write com.googlecode.iterm2 ShowPaneTitles -bool false;ok
+# running "hide pane titles in split panes"
+# defaults write com.googlecode.iterm2 ShowPaneTitles -bool false;ok
 running "animate split-terminal dimming"
 defaults write com.googlecode.iterm2 AnimateDimming -bool true;ok
 defaults write com.googlecode.iterm2 HotkeyChar -int 96;
@@ -1050,10 +1025,10 @@ defaults write com.googlecode.iterm2 FocusFollowsMouse -int 1;
 defaults write com.googlecode.iterm2 HotkeyModifiers -int 262401;
 running "Make iTerm2 load new tabs in the same directory"
 /usr/libexec/PlistBuddy -c "set \"New Bookmarks\":0:\"Custom Directory\" Recycle" ~/Library/Preferences/com.googlecode.iterm2.plist
-running "setting fonts"
-defaults write com.googlecode.iterm2 "Normal Font" -string "Hack-Regular 12";
-defaults write com.googlecode.iterm2 "Non Ascii Font" -string "RobotoMonoForPowerline-Regular 12";
-ok
+# running "setting fonts"
+# defaults write com.googlecode.iterm2 "Normal Font" -string "Hack-Regular 12";
+# defaults write com.googlecode.iterm2 "Non Ascii Font" -string "RobotoMonoForPowerline-Regular 12";
+# ok
 running "reading iterm settings"
 defaults read -app iTerm > /dev/null 2>&1;
 ok
@@ -1176,26 +1151,12 @@ running "Disable continuous spell checking"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false;ok
 
 ###############################################################################
-bot "SizeUp.app"
-###############################################################################
-
-running "Start SizeUp at login"
-defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true;ok
-
-running "Don’t show the preferences window on next start"
-defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false;ok
-
-killall cfprefsd
-
-open /Applications/iTerm.app
-
-###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
 bot "OK. Note that some of these changes require a logout/restart to take effect. Killing affected applications (so they can reboot)...."
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
   "Dock" "Finder" "Mail" "Messages" "Safari" "SizeUp" "SystemUIServer" \
-  "iCal" "Terminal"; do
+  "iCal"; do
   killall "${app}" > /dev/null 2>&1
 done
 

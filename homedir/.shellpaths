@@ -1,16 +1,18 @@
-#My Scripts
+#########################################################################
+# My Scripts
+#########################################################################
 export PATH=$PATH:.
-#export PATH=$PATH:~/.dotfiles/scripts
 
-#Brew
-export PATH=/usr/local/sbin:$PATH
-export PATH=/usr/local/bin:$PATH
+#########################################################################
+# Tools
+#########################################################################
+export PATH=$PATH:/usr/local/sbin
+export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
+export PATH=$PATH:$HOME/.pyenv
+export PATH=$PATH:$GOPATH/bin
 
-# GO
-#export PATH=$PATH:/usr/local/opt/go/libexec/bin
-
-# The next line updates PATH for the Google Cloud SDK.
-#source "/Users/$(whoami)/Downloads/google-cloud-sdk/path.zsh.inc"
-
-# The next line enables shell command completion for gcloud.
-#source "/Users/$(whoami)/Downloads/google-cloud-sdk/completion.zsh.inc"
+#########################################################################
+# Coreutils
+#########################################################################
+export PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin

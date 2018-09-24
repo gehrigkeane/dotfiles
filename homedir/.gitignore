@@ -1,6 +1,6 @@
-#########
-# MacOS #
-#########
+##################################################
+# MacOS
+##################################################
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -19,19 +19,19 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-############
-# Security #
-############
+##################################################
+# Security
+##################################################
 id_rsa
 
-###########
-# Tooling #
-###########
+##################################################
+# Tooling
+##################################################
 .vagrant/
 
-#######
-# VIM #
-#######
+##################################################
+# VIM
+##################################################
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *.un~
@@ -39,9 +39,9 @@ Session.vim
 .netrwhist
 *~
 
-#########
-# Maven #
-#########
+##################################################
+# Maven
+##################################################
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -49,10 +49,65 @@ pom.xml.versionsBackup
 pom.xml.next
 release.properties
 
+##################################################
+# Python
+##################################################
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-########
-# Node #
-########
+# Distribution / packaging
+.Python
+develop-eggs/
+eggs/
+.eggs/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# pyenv
+.python-version
+
+### Python Patch ###
+.venv/
+
+### Python.VirtualEnv Stack ###
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+pip-selfcheck.json
+
+##################################################
+# Node
+##################################################
 # Logs
 *.log
 
