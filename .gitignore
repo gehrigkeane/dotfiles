@@ -17,3 +17,10 @@ homedir/.vim/.netrwhist
 homedir/.vim/bundle/*
 !homedir/.vim/bundle/.gitignore
 !homedir/.vim/bundle/Vundle.vim
+
+# ZPlugin
+!homedir/.zplugin/bin
+homedir/.zplugin
+
+homedir/.shellsecrets
+TODO.md

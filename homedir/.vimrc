@@ -1,6 +1,6 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Must Have
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme solarized
 " syntax on " syntax highlighting on
 syntax enable
@@ -12,9 +12,9 @@ else
     set background=dark
 endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -83,9 +83,10 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " global enable spell check
 "set spell spelllang=en_us   " spell check go to highlighted word and "z=" to see list to turn off set nospell
 setlocal spell spelllang=en_us
@@ -95,7 +96,7 @@ autocmd BufRead,BufNewFile *.md,*.txt setlocal spell  " enable spell check for c
 set enc=utf-8
 set fenc=utf-8
 set termencoding=utf-8
-set history=1000 " How many lines of history to remember
+set history=10000 " How many lines of history to remember
 set cf " enable error files and error jumping
 set ffs=unix,dos,mac " support all three, in this order
 set viminfo+=! " make sure it can save viminfo
@@ -110,9 +111,9 @@ if has("clipboard")
   endif
 endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Files/Backups/Sessions
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nobackup
 set nowb
 set noswapfile
@@ -123,9 +124,9 @@ set sessionoptions+=localoptions " What should be saved during sessions being sa
 set sessionoptions+=resize " What should be saved during sessions being saved
 set sessionoptions+=winpos " What should be saved during sessions being saved
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim UI
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set lsp=0 " space it out a little more (easier to read)
 set wildmenu " turn on wild menu
 set wildmode=list:longest " turn on wild menu in special format (long format)
@@ -144,9 +145,9 @@ set noerrorbells " don't make noise
 set list " we do what to show tabs, to ensure we get them out of my files
 set listchars=tab:>-,trail:- " show tabs and trailing whitespace
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual Cues
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set showmatch " show matching brackets
 set mat=5 " how many tenths of a second to blink matching brackets for
 set nohlsearch " do not highlight searched for phrases
@@ -157,9 +158,9 @@ set novisualbell " don't blink
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 set laststatus=2 " always show the status line
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indent Related
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set ai " autoindent (filetype indenting instead)
 set nosi " smartindent (filetype indenting instead)
 set cindent " do c-style indenting
@@ -171,9 +172,9 @@ set copyindent " but above all -- follow the conventions laid before us
 set textwidth=120
 filetype plugin indent on " load filetype plugins and indent settings
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text Formatting/Layout
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set fo=tcrq " See Help (complex)
 set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
 set expandtab " no real tabs!
@@ -186,12 +187,12 @@ set cursorcolumn " show the current column
 set cursorline
 " hi CursorLine term=underline ctermbg=008 guibg=#493a35
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
 "    Enable folding, but by default make it act like folding is
 "    off, because folding is annoying in anything but a few rare
 "    cases
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set foldenable " Turn on folding
 set foldmarker={,} " Fold C style code
 set foldmethod=marker " Fold on the marker
@@ -199,15 +200,15 @@ set foldlevel=100 " Don't autofold anything (but I can still fold manually)
 set foldopen-=search " don't open folds when you search into them
 set foldopen-=undo " don't open folds when you undo stuff
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Security
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set modelines=0
 set nomodeline
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTags
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "let Tlist_Ctags_Cmd = 'ctags' " Location of ctags
 "let Tlist_Sort_Type = "name" " order by
 "let Tlist_Use_Right_Window = 1 " split to the right side of the screen
@@ -217,27 +218,27 @@ set nomodeline
 "let Tlist_Enable_Fold_Column = 1 " Do show folding tree
 "let Tlist_WinWidth = 50 " 50 cols wide, so I can (almost always) read my functions
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Matchit
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let b:match_ignorecase = 1
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Perl
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let perl_extended_vars=1 " highlight advanced perl vars inside strings
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom Functions
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Select range, then hit :SuperRetab($width) - by p0g and FallingCow
 function! SuperRetab(width) range
     silent! exe a:firstline . ',' . a:lastline . 's/\v%(^ *)@<= {'. a:width .'}/\t/g'
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " map <up> <ESC>:bp<RETURN> " left arrow (normal mode) switches buffers
 " map <down> <ESC>:bn<RETURN> " right arrow (normal mode) switches buffers
 " map <right> <ESC>:Tlist<RETURN> " show taglist
@@ -245,14 +246,14 @@ endfunction
 " map <F2> <ESC>ggVG:call SuperRetab()<left>
 " map <F12> ggVGg? " apply rot13 for people snooping over shoulder, good fun
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Useful abbrevs
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autocommands
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "au BufRead,BufNewFile *.zcml set filetype=xml
 "au BufRead,BufNewFile *.rb,*.rhtml set tabstop=2
 "au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
@@ -267,11 +268,11 @@ au FileType xml set omnifunc=xmlcomplete#CompleteTags
 au FileType c set omnifunc=ccomplete#Complete
 " autocmd vimenter * NERDTree
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Change paging overlap amount from 2 to 5 (+3)
 " if you swapped C-y and C-e, and set them to 2, it would
 " remove any overlap between pages
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <C-b> <C-b>3<C-e> "  Make overlap 3 extra on control-b
 
 " Yank text to the macOS clipboard
@@ -286,9 +287,9 @@ noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 nnoremap <silent> <leader>es :Esformatter<CR>
 vnoremap <silent> <leader>es :EsformatterVisual<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "let NERDTreeShowHidden=1
 "let NERDTreeIgnore=['\.DS_Store$']
 "" auto open if no file sent as arg
@@ -299,10 +300,10 @@ vnoremap <silent> <leader>es :EsformatterVisual<CR>
 "" Autoclose if only NERDtree is left
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " netrw (default installed alt for NERDTree)
 " more info: https://shapeshed.com/vim-netrw/
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3 " tre style directory listing
 "let g:netrw_browse_split = 2 " open files in new vertical split
@@ -314,9 +315,24 @@ augroup ProjectDrawer
   autocmd VimEnter * :Vexplore
 augroup END
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" netrw (default installed alt for NERDTree)
+" more info: https://shapeshed.com/vim-netrw/
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:netrw_banner = 0
+" let g:netrw_liststyle = 3 " tre style directory listing
+" let g:netrw_browse_split = 2 " open files in new vertical split
+" let g:netrw_browse_split = 4 " open file in previous window
+" let g:netrw_altv = 1
+" let g:netrw_winsize = 25 " width of dir explorer
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -334,8 +350,9 @@ let g:syntastic_enable_tslint_checker = 1
 "let g:syntastic_typescript_checkers = ['tslint', 'tsc']
 let g:syntastic_enable_pug_checker = 1
 let g:syntastic_pug_checkers = ['jade','pug']
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Other
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:sneak#streak = 1
 let g:airline_theme='bubblegum'

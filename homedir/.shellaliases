@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# Restore TMUX w/out _dead_ startup session 
+# ref: https://github.com/tmux-plugins/tmux-resurrect/issues/139#issuecomment-464392088
+alias mux='pgrep -vx tmux > /dev/null && tmux new -d -s delete-me && tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && tmux kill-session -t delete-me && tmux attach || tmux attach'
+
+# Terraform
+alias tf="terraform"
+
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
@@ -27,9 +34,10 @@ alias network.internalip="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9
 # -l Long format
 # -h Short size suffixes (B, K, M, G, P)
 # -p Postpend slash to folders
-alias l='exa -haglF --git'
+alias l='lsd -Al'
+alias ld='lsd -Al --total-size'
+alias lt='lsd --tree'
 alias ls='ls -haltrG'
-alias ll='ls -l -G -h -p'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
@@ -41,7 +49,7 @@ alias pbcopynn='tr -d "\n" | pbcopy'
 alias reload="exec $SHELL -l"
 
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias brewup='brew update; brew upgrade; brew cask upgrade; brew cleanup --prune -s; brew doctor; brew cask doctor'
+alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup --prune all -s; brew doctor --verbose'
 alias update='sudo softwareupdate -i -a; brewup'
 
 alias jsonfix="pbpaste | jq . | pbcopy"
@@ -76,7 +84,7 @@ alias pipenv_clean='pipenv lock && pipenv clean && pipenv sync --dev'
 # Destroy venv, recompute lock, install dependencies
 alias pipenv_nuke='pipenv --rm && pipenv lock --clear && pipenv sync --dev'
 # Format a file path
-alias pyfmt='p() {pipenv run black -l 100 $1 && pipenv run isort -rc $1};p'
+alias pyfmt='p() {pipenv run black $1 && pipenv run isort -rc $1};p'
 
 # Clean python dist artifacts
 alias pydist_clean='\rm -rf dist build *.egg-info'
@@ -117,3 +125,6 @@ alias iplocal="ipconfig getifaddr en0"
 # alias spotoff="sudo mdutil -a -i off"
 # Enable Spotlight
 # alias spoton="sudo mdutil -a -i on"
+
+# Git Alias Overrides See: https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/git
+alias gcd="git checkout dev"

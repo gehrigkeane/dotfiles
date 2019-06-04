@@ -354,7 +354,7 @@ The following will only happen if you agree on the prompt
 
 ## Software Installation
 
-homebrew, fontconfig, git, ruby (latest), and zsh (latest) are all installed inside the `install.sh` as foundational software for running this project.
+homebrew, fontconfig, [powerline/fonts](https://github.com/powerline/fonts) git, ruby (latest), zsh (latest), and [zplug](https://github.com/zplug/zplug) are all installed inside the `install.sh` as foundational software for running this project.
 Additional software is configured in `homedir/.Brewfile` and can be customized in your own fork/branch (you can change everything in your own fork/branch).
 The following is the software that I have set as default:
 

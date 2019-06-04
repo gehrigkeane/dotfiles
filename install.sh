@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-###############################################################################
+################################################################################
 # This script installs the dotfiles and runs all other system configuration scripts
 # @author Adam Eivy
-###############################################################################
+################################################################################
 
 # include my library helpers for colorized echo and require_brew, etc
 source ./lib_sh/echos.sh
@@ -33,9 +33,9 @@ if [ $? -ne 0 ]; then
   fi
 fi
 
-###############################################################################
+################################################################################
 # Better /etc/hosts
-###############################################################################
+################################################################################
 read -r -p "(Recommended) Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file) [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
     action "cp /etc/hosts /etc/hosts.backup"
@@ -149,14 +149,14 @@ if ! xcode-select --print-path &> /dev/null; then
 
 fi
 
-###############################################################################
+################################################################################
 # Bootstrap Homebrew (CLI Packages)
-###############################################################################
+################################################################################
 running "checking homebrew install"
 brew_bin=$(which brew) 2>&1 > /dev/null
 if [[ $? != 0 ]]; then
   action "installing homebrew"
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   if [[ $? != 0 ]]; then
     error "unable to install homebrew, script $0 abort!"
     exit 2
@@ -182,34 +182,25 @@ fi
 mkdir -p ~/Library/Caches/Homebrew/Formula
 brew doctor
 
-###############################################################################
+################################################################################
 # Bootstrap Shell Environment
-###############################################################################
+################################################################################
 # skip those GUI clients, git command-line all the way
 require_brew git
+require_brew svn
 # update zsh to latest
 require_brew zsh
-# update ruby to latest
-# use versions of packages installed with homebrew
-RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline` --with-libyaml-dir=`brew --prefix libyaml`"
-require_brew ruby
+# We're going to use zinit instead of oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
+
 # set zsh as the user login shell
 CURRENTSHELL=$(dscl . -read /Users/$USER UserShell | awk '{print $2}')
 if [[ "$CURRENTSHELL" != "/usr/local/bin/zsh" ]]; then
   bot "setting newer homebrew zsh (/usr/local/bin/zsh) as your shell (password required)"
-  # sudo bash -c 'echo "/usr/local/bin/zsh" >> /etc/shells'
+  sudo bash -c 'echo "/usr/local/bin/zsh" >> /etc/shells'
   chsh -s /usr/local/bin/zsh
   # sudo dscl . -change /Users/$USER UserShell $SHELL /usr/local/bin/zsh > /dev/null 2>&1
   ok
-fi
-
-# Install oh-my-zsh + Powerlevel9K
-if [ ! -n "$ZSH"]; then
-  ZSH=~/.dotfiles/oh-my-zsh
-fi
-
-if [[ ! -d "./oh-my-zsh/custom/themes/powerlevel9k" ]]; then
-  git clone https://github.com/bhilburn/powerlevel9k.git oh-my-zsh/custom/themes/powerlevel9k
 fi
 
 bot "Dotfiles Setup"
@@ -245,39 +236,17 @@ read -r -p "Do you want to install vim plugins now? [y|N] " response
 if [[ $response =~ (y|yes|Y) ]];then
   bot "Installing vim plugins"
   # cmake is required to compile vim bundle YouCompleteMe
-  # require_brew cmake
+  require_brew cmake
   vim +PluginInstall +qall > /dev/null 2>&1
   ok
 else
   ok "skipped. Install by running :PluginInstall within vim"
 fi
 
-bot "VIM Setup"
-read -r -p "Do you want to install vim plugins now? [y|N] " response
-if [[ $response =~ (y|yes|Y) ]];then
-  bot "Installing vim plugins"
-  # cmake is required to compile vim bundle YouCompleteMe
-  require_brew cmake
-  vim +PluginInstall +qall > /dev/null 2>&1
-  ok
-fi
-
-
-# if [[ -d "/Library/Ruby/Gems/2.0.0" ]]; then
-#   running "Fixing Ruby Gems Directory Permissions"
-#   sudo chown -R $(whoami) /Library/Ruby/Gems/2.0.0
-#   ok
-# fi
-
-# node version manager
-require_brew nvm
-
-# nvm
-require_nvm stable
-
-###############################################################################
+################################################################################
 bot "installing packages from ~/.Brewfile"
-###############################################################################
+################################################################################
+# refers to ~/.Brewfile
 time brew bundle install -v --global
 ok
 
@@ -286,18 +255,18 @@ brew cleanup --force > /dev/null 2>&1
 rm -f -r /Library/Caches/Homebrew/* > /dev/null 2>&1
 ok
 
-###############################################################################
+################################################################################
 bot "OS Configuration"
-###############################################################################
+################################################################################
 read -r -p "Do you want to update the system configurations? [y|N] " response
 if [[ -z $response || $response =~ ^(n|N) ]]; then
   bot "All done"
   exit
 fi
 
-###############################################################################
+################################################################################
 bot "Configuring General System UI/UX..."
-###############################################################################
+################################################################################
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 running "closing any system preferences to prevent issues with automated changes"
@@ -405,9 +374,9 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -boo
 # Disable the “Are you sure you want to open this application?” dialog
 # defaults write com.apple.LaunchServices LSQuarantine -bool false
 
-###############################################################################
+################################################################################
 # SSD-specific tweaks
-###############################################################################
+################################################################################
 
 # disablelocal is no longer used, check man tmutil for more info
 # running "Disable local Time Machine snapshots"
@@ -601,35 +570,35 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false;ok
 running "Disable smart dashes as they’re annoying when typing code"
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false;ok
 
-###############################################################################
+################################################################################
 bot "Trackpad, mouse, keyboard, Bluetooth accessories, and input"
-###############################################################################
+################################################################################
 
 running "Trackpad: enable tap to click for this user and for the login screen"
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1;ok
 
-running "Trackpad: map bottom right corner to right-click"
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true;ok
+# running "Trackpad: map bottom right corner to right-click"
+# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
+# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+# defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
+# defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true;ok
 
 running "Disable 'natural' (Lion-style) scrolling"
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false;ok
 
-running "Increase sound quality for Bluetooth headphones/headsets"
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40;ok
+# running "Increase sound quality for Bluetooth headphones/headsets"
+# defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40;ok
 
 running "Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3;ok
 
-running "Use scroll gesture with the Ctrl (^) modifier key to zoom"
-defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
-defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144;ok
-running "Follow the keyboard focus while zoomed in"
-defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true;ok
+# running "Use scroll gesture with the Ctrl (^) modifier key to zoom"
+# defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+# defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144;ok
+# running "Follow the keyboard focus while zoomed in"
+# defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true;ok
 
 running "Disable press-and-hold for keys in favor of key repeat"
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false;ok
@@ -647,9 +616,9 @@ defaults write NSGlobalDomain AppleMetricUnits -bool true;ok
 running "Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false;ok
 
-###############################################################################
+################################################################################
 bot "Configuring the Screen"
-###############################################################################
+################################################################################
 
 running "Require password immediately after sleep or screen saver begins"
 defaults write com.apple.screensaver askForPassword -int 1
@@ -671,9 +640,9 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2;ok
 running "Enable HiDPI display modes (requires restart)"
 sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true;ok
 
-###############################################################################
+################################################################################
 bot "Finder Configs"
-###############################################################################
+################################################################################
 
 running "Keep folders on top when sorting by name (version 10.12 and later)"
 defaults write com.apple.finder _FXSortFoldersFirst -bool true
@@ -756,9 +725,9 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
   OpenWith -bool true \
   Privileges -bool true;ok
 
-###############################################################################
+################################################################################
 bot "Dock & Dashboard"
-###############################################################################
+################################################################################
 
 running "Enable highlight hover effect for the grid view of a stack (Dock)"
 defaults write com.apple.dock mouse-over-hilite-stack -bool true;ok
@@ -831,7 +800,7 @@ find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -dele
 #defaults write com.apple.dock ResetLaunchPad -bool TRUE;killall Dock
 
 bot "Configuring Hot Corners"
-###############################################################################
+################################################################################
 # Possible values:
 #  0: no-op
 #  2: Mission Control
@@ -854,9 +823,9 @@ running "Bottom right screen corner → Start screen saver"
 defaults write com.apple.dock wvous-br-corner -int 5
 defaults write com.apple.dock wvous-br-modifier -int 0;ok
 
-###############################################################################
+################################################################################
 bot "Configuring Safari & WebKit"
-###############################################################################
+################################################################################
 
 running "Set Safari’s home page to ‘about:blank’ for faster loading"
 defaults write com.apple.Safari HomePage -string "about:blank";ok
@@ -895,9 +864,9 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 running "Add a context menu item for showing the Web Inspector in web views"
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true;ok
 
-###############################################################################
+################################################################################
 bot "Configuring Mail"
-###############################################################################
+################################################################################
 
 # running "Disable send and reply animations in Mail.app"
 # defaults write com.apple.mail DisableReplyAnimations -bool true
@@ -920,9 +889,9 @@ bot "Configuring Mail"
 # running "Disable automatic spell checking"
 # defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled";ok
 
-###############################################################################
+################################################################################
 bot "Spotlight"
-###############################################################################
+################################################################################
 
 running "Hide Spotlight tray-icon (and subsequent helper)"
 sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search;ok
@@ -961,9 +930,9 @@ sudo mdutil -i on / > /dev/null;ok
 #running "Rebuild the index from scratch"
 #sudo mdutil -E / > /dev/null;ok
 
-###############################################################################
+################################################################################
 bot "Terminal & iTerm2"
-###############################################################################
+################################################################################
 
 running "Only use UTF-8 in Terminal.app"
 defaults write com.apple.terminal StringEncodings -array 4;ok
@@ -983,11 +952,6 @@ running "Enable “focus follows mouse” for Terminal.app and all X11 apps"
 defaults write com.apple.terminal FocusFollowsMouse -bool true
 #defaults write org.x.X11 wm_ffm -bool true;ok
 
-running "Installing the Solarized Light theme for iTerm (opening file)"
-open "./configs/Solarized Light.itermcolors";ok
-running "Installing the Patched Solarized Dark theme for iTerm (opening file)"
-open "./configs/Solarized Dark Patch.itermcolors";ok
-
 running "Don’t display the annoying prompt when quitting iTerm"
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false;ok
 # running "hide tab title bars"
@@ -1002,19 +966,35 @@ defaults write com.googlecode.iterm2 HotkeyChar -int 96;
 defaults write com.googlecode.iterm2 HotkeyCode -int 50;
 defaults write com.googlecode.iterm2 FocusFollowsMouse -int 1;
 defaults write com.googlecode.iterm2 HotkeyModifiers -int 262401;
-running "Make iTerm2 load new tabs in the same directory"
-/usr/libexec/PlistBuddy -c "set \"New Bookmarks\":0:\"Custom Directory\" Recycle" ~/Library/Preferences/com.googlecode.iterm2.plist
+
+# running "Make iTerm2 load new tabs in the same directory"
+# /usr/libexec/PlistBuddy -c "set \"New Bookmarks\":0:\"Custom Directory\" Recycle" ~/Library/Preferences/com.googlecode.iterm2.plist
+
 # running "setting fonts"
 # defaults write com.googlecode.iterm2 "Normal Font" -string "Hack-Regular 12";
 # defaults write com.googlecode.iterm2 "Non Ascii Font" -string "RobotoMonoForPowerline-Regular 12";
 # ok
-running "reading iterm settings"
-defaults read -app iTerm > /dev/null 2>&1;
-ok
+# running "reading iterm settings"
+# defaults read -app iTerm > /dev/null 2>&1;
+# ok
 
-###############################################################################
+# mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles
+# # symlink might still exist
+# unlink ~/Library/Application\ Support/iTerm2/DynamicProfiles/itermconfig > /dev/null 2>&1
+# # create the link
+# # Note dynamic profiles must have "Name" and "Guid" attributes, "Guid" attributes must universally differ.
+# ln -s ~/.dotfiles/homedir/.itermconfig ~/Library/Application\ Support/iTerm2/DynamicProfiles/itermconfig
+
+################################################################################
+bot "Kitty"
+################################################################################
+running "Link .kitty to ~/.config/kitty/kitty.conf"
+mkdir -p ~/.config/kitty
+ln -sfn ~/.dotfiles/homedir/.kitty ~/.config/kitty/kitty.conf
+
+################################################################################
 bot "Time Machine"
-###############################################################################
+################################################################################
 
 running "Prevent Time Machine from prompting to use new hard drives as backup volume"
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true;ok
@@ -1022,9 +1002,9 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true;ok
 # running "Disable local Time Machine backups"
 # hash tmutil &> /dev/null && sudo tmutil disablelocal;ok
 
-###############################################################################
+################################################################################
 bot "Activity Monitor"
-###############################################################################
+################################################################################
 
 running "Show the main window when launching Activity Monitor"
 defaults write com.apple.ActivityMonitor OpenMainWindow -bool true;ok
@@ -1085,9 +1065,9 @@ running "Change Dock Icon"
 # 6: CPU History
 defaults write com.apple.ActivityMonitor IconType -int 3;ok
 
-###############################################################################
+################################################################################
 bot "Address Book, Dashboard, iCal, TextEdit, and Disk Utility"
-###############################################################################
+################################################################################
 
 running "Enable the debug menu in Address Book"
 defaults write com.apple.addressbook ABShowDebugMenu -bool true;ok
@@ -1106,9 +1086,9 @@ running "Enable the debug menu in Disk Utility"
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true;ok
 
-###############################################################################
+################################################################################
 bot "Mac App Store"
-###############################################################################
+################################################################################
 
 running "Enable the WebKit Developer Tools in the Mac App Store"
 defaults write com.apple.appstore WebKitDeveloperExtras -bool true;ok
@@ -1116,9 +1096,9 @@ defaults write com.apple.appstore WebKitDeveloperExtras -bool true;ok
 running "Enable Debug Menu in the Mac App Store"
 defaults write com.apple.appstore ShowDebugMenu -bool true;ok
 
-###############################################################################
+################################################################################
 bot "Messages"
-###############################################################################
+################################################################################
 
 running "Disable automatic emoji substitution (i.e. use plain text smileys)"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false;ok
@@ -1129,9 +1109,13 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 running "Disable continuous spell checking"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false;ok
 
-###############################################################################
+################################################################################
 # Kill affected applications                                                  #
-###############################################################################
+################################################################################
+killall cfprefsd
+
+# open /Applications/iTerm.app
+
 bot "OK. Note that some of these changes require a logout/restart to take effect. Killing affected applications (so they can reboot)...."
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
   "Dock" "Finder" "Mail" "Messages" "Safari" "SizeUp" "SystemUIServer" \
@@ -1139,6 +1123,6 @@ for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
   killall "${app}" > /dev/null 2>&1
 done
 
-brew update && brew upgrade && brew cleanup 
+brew update && brew upgrade && brew cleanup
 
 bot "Woot! All done"

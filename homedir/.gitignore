@@ -87,9 +87,6 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-# pyenv
-.python-version
-
 ### Python Patch ###
 .venv/
 
@@ -100,7 +97,7 @@ coverage.xml
 [Ii]nclude
 # [Ll]ib
 [Ll]ib64
-[Ss]cripts
+# [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
 
