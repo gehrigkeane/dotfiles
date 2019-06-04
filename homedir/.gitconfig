@@ -55,9 +55,14 @@
   co = checkout
   br = branch
   cm = commit -m
+  cmp = cm "PLACEHOLDER"
   st = status
   # st = status -s -u
   ft = fetch
+  pod = pull origin dev
+  rs = reset HEAD~1
+  ri = rebase -i
+  rid = rebase -i dev
 
   # # least used
   # d = diff --color-words

@@ -49,9 +49,10 @@ else
     ok "skipped";
 fi
 
-###############################################################################
-# GitHub Config
-###############################################################################
+# ###########################################################
+# Git Config
+bot "OK, now I am going to update the .gitconfig for your user info:"
+# ###########################################################
 grep 'user = GITHUBUSER' ./homedir/.gitconfig > /dev/null 2>&1
 if [[ $? = 0 ]]; then
     read -r -p "What is your git username? " githubuser
@@ -251,24 +252,13 @@ else
   ok "skipped. Install by running :PluginInstall within vim"
 fi
 
-
-read -r -p "Install fonts? [y|N] " response
+bot "VIM Setup"
+read -r -p "Do you want to install vim plugins now? [y|N] " response
 if [[ $response =~ (y|yes|Y) ]];then
-  bot "installing fonts"
-  # need fontconfig to install/build fonts
-  require_brew fontconfig
-  ./fonts/install.sh
-  brew tap homebrew/cask-fonts
-  require_brew svn #required for roboto
-  require_cask font-fontawesome
-  require_cask font-awesome-terminal-fonts
-  require_cask font-hack
-  require_cask font-inconsolata-dz-for-powerline
-  require_cask font-inconsolata-g-for-powerline
-  require_cask font-inconsolata-for-powerline
-  require_cask font-roboto-mono
-  require_cask font-roboto-mono-for-powerline
-  require_cask font-source-code-pro
+  bot "Installing vim plugins"
+  # cmake is required to compile vim bundle YouCompleteMe
+  require_brew cmake
+  vim +PluginInstall +qall > /dev/null 2>&1
   ok
 fi
 
@@ -285,24 +275,10 @@ require_brew nvm
 # nvm
 require_nvm stable
 
-# always pin versions (no surprises, consistent dev/build machines)
-npm config set save-exact true
-
 ###############################################################################
-# Install configured brew apps and casks
-#
-# Switch to node.js mode
-# for better maintainability and
-# easier configuration via
-# JSON files and inquirer prompts
+bot "installing packages from ~/.Brewfile"
 ###############################################################################
-
-bot "installing npm tools needed to run this project..."
-npm install
-ok
-
-bot "installing packages from config.js..."
-node index.js
+time brew bundle install -v --global
 ok
 
 running "cleanup homebrew"
@@ -310,10 +286,11 @@ brew cleanup --force > /dev/null 2>&1
 rm -f -r /Library/Caches/Homebrew/* > /dev/null 2>&1
 ok
 
+###############################################################################
 bot "OS Configuration"
+###############################################################################
 read -r -p "Do you want to update the system configurations? [y|N] " response
 if [[ -z $response || $response =~ ^(n|N) ]]; then
-  open /Applications/iTerm.app
   bot "All done"
   exit
 fi
@@ -390,7 +367,7 @@ sudo systemsetup -setwakeonnetworkaccess off
 # sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.smbd.plist
 
 # Display login window as name and password
-#sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
+sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
 
 # Do not show password hints
 #sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0
@@ -436,8 +413,8 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -boo
 # running "Disable local Time Machine snapshots"
 # sudo tmutil disablelocal;ok
 
-# running "Disable hibernation (speeds up entering sleep mode)"
-# sudo pmset -a hibernatemode 0;ok
+running "Disable hibernation (speeds up entering sleep mode)"
+sudo pmset -a hibernatemode 0;ok
 
 running "Remove the sleep image file to save disk space"
 sudo rm -rf /Private/var/vm/sleepimage;ok
@@ -525,7 +502,7 @@ defaults write com.apple.dock persistent-apps -array "";ok
 #defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}';ok
 
 ################################################
-bot "Standard System Changes"
+bot "General System Changes"
 ################################################
 running "always boot in verbose mode (not MacOS GUI mode)"
 sudo nvram boot-args="-v";ok
@@ -679,7 +656,8 @@ defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0;ok
 
 running "Save screenshots to the desktop"
-defaults write com.apple.screencapture location -string "${HOME}/Desktop";ok
+mkdir -p "${HOME}/Desktop/screen_caps"
+defaults write com.apple.screencapture location -string "${HOME}/Desktop/screen_caps";ok
 
 running "Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)"
 defaults write com.apple.screencapture type -string "png";ok
@@ -706,10 +684,10 @@ defaults write com.apple.finder QuitMenuItem -bool true;ok
 running "Disable window animations and Get Info animations"
 defaults write com.apple.finder DisableAllAnimations -bool true;ok
 
-running "Set Desktop as the default location for new Finder windows"
+running "Set ${HOME} as the default location for new Finder windows"
 # For other paths, use 'PfLo' and 'file:///full/path/here/'
 defaults write com.apple.finder NewWindowTarget -string "PfDe"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/";ok
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/";ok
 
 running "Show hidden files by default"
 defaults write com.apple.finder AppleShowAllFiles -bool true;ok
@@ -853,6 +831,7 @@ find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -dele
 #defaults write com.apple.dock ResetLaunchPad -bool TRUE;killall Dock
 
 bot "Configuring Hot Corners"
+###############################################################################
 # Possible values:
 #  0: no-op
 #  2: Mission Control
@@ -945,8 +924,8 @@ bot "Configuring Mail"
 bot "Spotlight"
 ###############################################################################
 
-# running "Hide Spotlight tray-icon (and subsequent helper)"
-# sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search;ok
+running "Hide Spotlight tray-icon (and subsequent helper)"
+sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search;ok
 
 
 # Issue on macOS Mojave :

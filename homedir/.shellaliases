@@ -41,8 +41,8 @@ alias pbcopynn='tr -d "\n" | pbcopy'
 alias reload="exec $SHELL -l"
 
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cask upgrade; brew prune; brew cleanup; brew doctor'
-alias brewup='brew update; brew upgrade; brew cask upgrade; brew prune; brew cleanup; brew doctor; brew cask doctor'
+alias brewup='brew update; brew upgrade; brew cask upgrade; brew cleanup --prune -s; brew doctor; brew cask doctor'
+alias update='sudo softwareupdate -i -a; brewup'
 
 alias jsonfix="pbpaste | jq . | pbcopy"
 
@@ -68,6 +68,19 @@ alias dpause='dnode update --availability=pause'
 alias nls='docker node ls'
 alias nps='docker node ps'
 
+# Quickly check if shell session is in a venv
+alias wp='which python && python --version'
+# TODO: wrap pipenv management commands in CLI `pipenv_` or something with y/n prompts and directory awareness
+# Refresh lock, uninstall dependencies not in lock, install missing locked dependencies
+alias pipenv_clean='pipenv lock && pipenv clean && pipenv sync --dev'
+# Destroy venv, recompute lock, install dependencies
+alias pipenv_nuke='pipenv --rm && pipenv lock --clear && pipenv sync --dev'
+# Format a file path
+alias pyfmt='p() {pipenv run black -l 100 $1 && pipenv run isort -rc $1};p'
+
+# Clean python dist artifacts
+alias pydist_clean='\rm -rf dist build *.egg-info'
+
 # Files being opened
 # alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
 # Files used, anywhere on the filesystem
@@ -82,8 +95,8 @@ alias nps='docker node ps'
 # alias gitdev='git checkout develop; git-up; git branch --merged develop | grep -v "\* develop" | xargs -n 1 git branch -d; git branch;'
 
 # IP addresses
-# alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-# alias iplocal="ipconfig getifaddr en0"
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias iplocal="ipconfig getifaddr en0"
 # alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Show active network interfaces
@@ -98,7 +111,7 @@ alias nps='docker node ps'
 # alias pushup="git-up && git push"
 # Set the extended MacOS attributes on a file such that Quicklook will open it as text
 # alias qltext='xattr -wx com.apple.FinderInfo "54 45 58 54 21 52 63 68 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" $1'
-#alias qltext2='osascript -e tell application "Finder" to set file type of ((POSIX file "$1") as alias) to "TEXT"'
+# alias qltext2='osascript -e tell application "Finder" to set file type of ((POSIX file "$1") as alias) to "TEXT"'
 
 # Disable Spotlight
 # alias spotoff="sudo mdutil -a -i off"
