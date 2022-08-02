@@ -30,19 +30,44 @@ TIMEFMT="%U user %S system %P cpu %*Es total"
 # ref: https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh
 FPATH=/usr/local/share/zsh/site-functions:$FPATH
 
-source "$HOME/.zinit/bin/zinit.zsh"
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# zinit ice wait atinit"zpcompinit; zpcdreplay"                               # https://github.com/zdharma/fast-syntax-highlighting
-zinit light zdharma/fast-syntax-highlighting
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+
+# zinit ice wait atinit"zpcompinit; zpcdreplay"                               # https://github.com/zdharma-continuum/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'                                          # https://github.com/zsh-users/zsh-autosuggestions
 # zinit ice wait atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
 zinit light djui/alias-tips                                                   # https://github.com/djui/alias-tips
-zinit light gehrigkeane/zsh_plugins
+
+#zinit light mattbangert/kubectl-zsh-plugin
+zinit snippet https://github.com/gehrigkeane/zsh_plugins/blob/master/kubectl.zsh.plugin
+
+# Regenerate kubectl completion via `kubectl completion zsh > _kubectl`
+zinit ice as"completion"
+zinit snippet https://github.com/gehrigkeane/zsh_plugins/blob/master/_kubectl
 
 #
 # Oh My Zsh Plugins (via zinit)
@@ -63,6 +88,7 @@ zinit snippet OMZ::lib/git.zsh
 zinit snippet OMZ::plugins/brew/brew.plugin.zsh                               # https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/brew
 
 # https://github.com/zdharma/zinit/issues/382#issuecomment-660521300
+# https://github.com/zdharma/zinit/issues/367
 zinit lucid has'docker' for \
   as'completion' is-snippet \
   'https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker' \
@@ -129,9 +155,6 @@ source ~/.profile
 # bindkey '^[[A' up-line-or-search
 # bindkey '^[[B' down-line-or-search
 
-# NVM is painfully slow...
-function init_nvm(){
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
-}
+# FZF
+# Note: the following is stems from the `/usr/local/opt/fzf/install` executable
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

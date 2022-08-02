@@ -1,8 +1,8 @@
-pipenv
 pip
 setuptools
 wheel
 twine
 psutil
-bpytop
-
+keyring
+tqdm
+yawsso

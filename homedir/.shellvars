@@ -13,5 +13,8 @@ export LC_ALL=en_US.UTF-8
 # Tool paths
 #########################################################################
 export GOPATH=$HOME/dev/golang
+export GOPRIVATE="bitbucket.org/fetchrewards"
 # export GOROOT=$HOME/go
 export KITTY_CONFIG_DIRECTORY=$HOME
+
+export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring

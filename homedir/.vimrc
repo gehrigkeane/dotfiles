@@ -27,8 +27,8 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 " Plugin 'Valloric/YouCompleteMe'
 " Navigation (IDE frame)
-" Plugin 'scrooloose/nerdtree'
-" Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
@@ -46,13 +46,13 @@ Plugin 'suan/vim-instant-markdown'
 Plugin 'godlygeek/tabular'
 " language tools
 Plugin 'scrooloose/syntastic'
-Plugin 'millermedeiros/vim-esformatter'
+"Plugin 'millermedeiros/vim-esformatter'
 Plugin 'digitaltoad/vim-pug'
 " Plugin 'elzr/vim-json'
 " Plugin 'SirVer/ultisnips'
 "Plugin 'sheerun/vim-polyglot'
 " plugins from http://vim-scripts.org/vim/scripts.html
-Plugin 'node.js'
+"Plugin 'node.js'
 Plugin 'SuperTab'
 " Git plugin not hosted on GitHub
 " Plugin 'git://git.wincent.com/command-t.git'
@@ -266,7 +266,6 @@ au FileType html set omnifunc=htmlcomplete#CompleteTags
 au FileType css set omnifunc=csscomplete#CompleteCSS
 au FileType xml set omnifunc=xmlcomplete#CompleteTags
 au FileType c set omnifunc=ccomplete#Complete
-" autocmd vimenter * NERDTree
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Change paging overlap amount from 2 to 5 (+3)
@@ -292,28 +291,21 @@ vnoremap <silent> <leader>es :EsformatterVisual<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "let NERDTreeShowHidden=1
 "let NERDTreeIgnore=['\.DS_Store$']
+"
+"" Start NERDTree
+"autocmd vimenter * NERDTree
+"" Jump to the main window.
+"autocmd VimEnter * wincmd p
+"
 "" auto open if no file sent as arg
 "autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"
 "" Toggle NERDtree with C-n
 "map ,n <plug>NERDTreeTabsToggle<CR>
+"
 "" Autoclose if only NERDtree is left
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" netrw (default installed alt for NERDTree)
-" more info: https://shapeshed.com/vim-netrw/
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3 " tre style directory listing
-"let g:netrw_browse_split = 2 " open files in new vertical split
-let g:netrw_browse_split = 4 " open file in previous window
-let g:netrw_altv = 1
-let g:netrw_winsize = 25 " width of dir explorer
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
-augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " netrw (default installed alt for NERDTree)

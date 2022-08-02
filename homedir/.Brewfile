@@ -40,7 +40,7 @@ brew "go"                                           # (Backup, primary managed b
 brew "grep"                                         # GNU grep (replaces off-brand macos)
 brew "gti"                                          # http://r-wos.org/hacks/gti Humorous git alias
 brew "htop"                                         # https://hisham.hm/htop/ Improved top
-brew "httpie"                                       # https://github.com/jkbrzt/httpie Modern CURL + features
+# brew "httpie"                                       # MAINTAINANCE DRYING UP https://github.com/jkbrzt/httpie Modern CURL + features
 brew "jq"                                           # https://stedolan.github.io/jq/ Awesome JSON command line utility
 brew "libmagic"                                     # https://www.darwinsys.com/file/ Implementation of the file(1) command - required for python mime detection
 brew "libsodium"                                    # https://github.com/jedisct1/libsodium/ A modern, portable, easy to use crypto library
@@ -69,9 +69,10 @@ brew "tmux"                                         # https://tmux.github.io/ Te
 brew "trash"                                        # https://tmux.github.io/ Terminal multiplexer
 brew "tree"                                         # http://mama.indstate.edu/users/ice/tree/ Display directories as trees (with optional color/HTML output)
 brew "vim"                                          # https://www.vim.org/ Up-to-date vim replacement
-brew "watch"                                        # https://gitlab.com/procps-ng/procps Executes a program periodically, showing output fullscreen 
-brew "watchman"                                     # https://github.com/facebook/watchman Watch files and take action when they change 
+brew "watch"                                        # https://gitlab.com/procps-ng/procps Executes a program periodically, showing output fullscreen
+brew "watchman"                                     # https://github.com/facebook/watchman Watch files and take action when they change
 brew "wget"                                         # https://www.gnu.org/software/wget/ GNU wget
+brew "xh"                                           # https://github.com/ducaale/xh Modern cURL + features
 brew "yarn"                                         # https://yarnpkg.com/ JavaScript package manager
 brew "zsh"
 # brew "zplug"                                        # https://github.com/zplug/zplug
@@ -84,20 +85,22 @@ cask "alfred"                                       # https://www.alfredapp.com/
 cask "android-file-transfer"                        # https://www.android.com/filetransfer/ Browse and transfer files between your Mac computer and your Android device.
 cask "bartender"                                    # Not free software https://www.macbartender.com/
 # cask "battle-net"                                   # For the Horde!
+cask "bitwarden"                                    # https://bitwarden.com/ The definitive best personal credential manager
+cask "brave-browser"                                # https://brave.com/ Chrome but Safe
 cask "dash"                                         # https://kapeli.com/dash API Documentation Browser and Code Snippet Manager.
 cask "docker"                                       # https://www.docker.com/community-edition docker for mac
 cask "firefox"                                      # https://www.mozilla.org/firefox/
 cask "flycut"                                       # https://github.com/TermiT/Flycut Clean and simple clipboard manager for developers
-cask "font-awesome-terminal-fonts"                  # 
-cask "font-fontawesome"                             # 
-cask "font-hack"                                    # 
-cask "font-inconsolata-dz-for-powerline"            # 
-cask "font-inconsolata-for-powerline"               # 
-cask "font-inconsolata-g-for-powerline"             # 
-cask "font-roboto-mono"                             # 
-cask "font-roboto-mono-for-powerline"               # 
-cask "font-source-code-pro"                         # 
-cask "font-source-code-pro-for-powerline"           # 
+cask "font-awesome-terminal-fonts"                  #
+cask "font-fontawesome"                             #
+cask "font-hack"                                    #
+cask "font-inconsolata-dz-for-powerline"            #
+cask "font-inconsolata-for-powerline"               #
+cask "font-inconsolata-g-for-powerline"             #
+cask "font-roboto-mono"                             #
+cask "font-roboto-mono-for-powerline"               #
+cask "font-source-code-pro"                         #
+cask "font-source-code-pro-for-powerline"           #
 cask "google-chrome"                                # https://www.google.com/chrome/
 cask "jetbrains-toolbox"                            # https://www.jetbrains.com/toolbox-app
 cask "istat-menus"                                  # Not free software https://bjango.com/mac/istatmenus/
@@ -112,7 +115,7 @@ cask "qlprettypatch"                                # https://github.com/atnan/Q
 cask "qlstephen"                                    # https://whomwah.github.io/qlstephen/ QuickLook plugin for plain text files sans file extension
 cask "quicklook-csv"                                # https://github.com/p2/quicklook-csv
 cask "quicklook-json"                               # http://www.sagtau.com/quicklookjson.html
-# cask "robo-3t"                                      # https://robomongo.org/ Lightweight GUI for MongoDB 
+# cask "robo-3t"                                      # https://robomongo.org/ Lightweight GUI for MongoDB
 cask "spectacle"                                    # https://www.spectacleapp.com/ Window control with simple keyboard shortcuts
 cask "slack"
 cask "spotify"
@@ -120,5 +123,5 @@ cask "spotify"
 # cask "the-unarchiver"                               # https://theunarchiver.com/ Nice file archive GUI
 cask "tunnelblick"                                  # https://www.tunnelblick.net/ OpenVPN client on macOS
 cask "visual-studio-code"                           # https://code.visualstudio.com/ Code editing redefined
-cask "vlc"                                          # https://www.videolan.org/vlc/ VLC is a free and open source cross-platform multimedia player 
+cask "vlc"                                          # https://www.videolan.org/vlc/ VLC is a free and open source cross-platform multimedia player
 cask "webpquicklook"                                # https://github.com/emin/WebPQuickLook QuickLook plugin for WebP image files

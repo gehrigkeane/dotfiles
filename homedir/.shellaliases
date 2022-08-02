@@ -1,11 +1,24 @@
 #!/bin/sh
 
-# Restore TMUX w/out _dead_ startup session 
+# Restore TMUX w/out _dead_ startup session
 # ref: https://github.com/tmux-plugins/tmux-resurrect/issues/139#issuecomment-464392088
 alias mux='pgrep -vx tmux > /dev/null && tmux new -d -s delete-me && tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && tmux kill-session -t delete-me && tmux attach || tmux attach'
 
 # Terraform
 alias tf="terraform"
+alias tfi="terraform init"
+alias tfp="terraform plan"
+alias tfa="terraform apply"
+alias tfv="terraform validate"
+alias tfw="terraform workspace"
+alias tfws="terraform workspace select"
+alias tfwl="terraform workspace list"
+alias tff="terraform fmt"
+
+#
+# ASDF
+alias asdfi="asdf install"
+alias asdfu="asdf uninstall"
 
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
@@ -56,10 +69,10 @@ alias jsonfix="pbpaste | jq . | pbcopy"
 
 alias lookbusy="cat /dev/urandom | hexdump -C | grep \"34 32\""
 
-alias k='kubectl'
-alias kp='kubectl get pods -o wide'
-alias kdp='kubectl describe pod'
-alias kdn='kubectl describe node'
+# alias k='kubectl'
+# alias kp='kubectl get pods -o wide'
+# alias kdp='kubectl describe pod'
+# alias kdn='kubectl describe node'
 
 # Docker Alias'
 # alias ec2='ssh -o StrictHostKeyChecking=no -i /home/ec2-user/internal-private-key'
@@ -76,8 +89,10 @@ alias dpause='dnode update --availability=pause'
 alias nls='docker node ls'
 alias nps='docker node ps'
 
-# Quickly check if shell session is in a venv
+# Tool Version Information
+alias wg='which go && go version'
 alias wp='which python && python --version'
+
 # TODO: wrap pipenv management commands in CLI `pipenv_` or something with y/n prompts and directory awareness
 # Refresh lock, uninstall dependencies not in lock, install missing locked dependencies
 alias pipenv_clean='pipenv lock && pipenv clean && pipenv sync --dev'
@@ -88,6 +103,11 @@ alias pyfmt='p() {pipenv run black $1 && pipenv run isort -rc $1};p'
 
 # Clean python dist artifacts
 alias pydist_clean='\rm -rf dist build *.egg-info'
+
+#
+# Mongo
+#
+alias mongo="docker run --rm -i --name mongo mongo:bionic mongo"
 
 # Files being opened
 # alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'

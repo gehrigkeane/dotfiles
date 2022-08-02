@@ -2,6 +2,8 @@
 # Generic configuration that applies to all shells
 #############################################################
 
+source ~/.shellcolors
+
 source ~/.shellvars
 source ~/.shellsecrets
 source ~/.shellfn

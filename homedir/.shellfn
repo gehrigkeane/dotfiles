@@ -31,6 +31,22 @@ function weather() {
   curl wttr.in/$1
 }
 
+function fix_trailing_newline() {
+  GREEN=$(tput setaf 2)
+  NORMAL=$(tput sgr0)
+
+  for file in "$@"
+  do
+    printf "${GREEN}Fixing trailing newline for %s\n${NORMAL}" "$file" >&2
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      sed -i '' -e '$a\' "$1"
+    else
+      sed -i -e '$a\' "$1"
+    fi
+  done
+}
+alias fta=fix_trailing_newline
+
 #########################################
 # Unused
 #########################################
