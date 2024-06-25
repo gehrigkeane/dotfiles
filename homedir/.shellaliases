@@ -1,5 +1,10 @@
 #!/bin/sh
 
+alias c="clear"
+alias m="mise"
+alias asdf="mise"
+alias red="redic-cli"
+
 # Restore TMUX w/out _dead_ startup session
 # ref: https://github.com/tmux-plugins/tmux-resurrect/issues/139#issuecomment-464392088
 alias mux='pgrep -vx tmux > /dev/null && tmux new -d -s delete-me && tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && tmux kill-session -t delete-me && tmux attach || tmux attach'
@@ -10,6 +15,7 @@ alias tfi="terraform init"
 alias tfp="terraform plan"
 alias tfa="terraform apply"
 alias tfv="terraform validate"
+alias tfo="terraform output"
 alias tfw="terraform workspace"
 alias tfws="terraform workspace select"
 alias tfwl="terraform workspace list"
@@ -17,8 +23,29 @@ alias tff="terraform fmt"
 
 #
 # ASDF
-alias asdfi="asdf install"
-alias asdfu="asdf uninstall"
+# alias asdfi="asdf install"
+alias asdfd="asdf uninstall"
+
+#
+# forgit
+# ref: https://github.com/wfxr/forgit
+# forgit_log=glo
+# forgit_diff=gd
+forgit_add=fga
+# forgit_reset_head=grh
+forgit_ignore=fgi
+# forgit_checkout_file=gcf
+forgit_checkout_branch=fgcb
+# forgit_branch_delete=gbd
+# forgit_checkout_tag=gct
+forgit_checkout_commit=fgco
+# forgit_revert_commit=grc
+# forgit_clean=gclean
+# forgit_stash_show=gss
+# forgit_cherry_pick=gcp
+# forgit_rebase=grb
+# forgit_blame=gbl
+# forgit_fixup=gfu
 
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
@@ -50,7 +77,7 @@ alias network.internalip="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9
 alias l='lsd -Al'
 alias ld='lsd -Al --total-size'
 alias lt='lsd --tree'
-alias ls='ls -haltrG'
+# alias ls='ls -haltrG'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
@@ -62,8 +89,8 @@ alias pbcopynn='tr -d "\n" | pbcopy'
 alias reload="exec $SHELL -l"
 
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup --prune all -s; brew doctor --verbose'
-alias update='sudo softwareupdate -i -a; brewup'
+# alias brewup='brew update -f; brew upgrade -f; brew upgrade --cask; brew cleanup --prune all -s; brew doctor --verbose'
+# alias update='sudo softwareupdate -i -a; brewup'
 
 alias jsonfix="pbpaste | jq . | pbcopy"
 

@@ -1,3 +1,7 @@
+#
+# TODO: refresh kitty config against latest
+confirm_os_window_close 0
+
 # vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
 #: Fonts {{{
@@ -6,7 +10,7 @@
 #: individual font faces and even specify special fonts for particular
 #: characters.
 
-font_family      SourceCodePro+Powerline+Awesome Regular
+font_family      SauceCodePro Nerd Font Mono Regular
 # bold_font        auto
 # italic_font      auto
 # bold_italic_font auto
@@ -23,7 +27,7 @@ font_family      SourceCodePro+Powerline+Awesome Regular
 #:     italic_font      Operator Mono Book Italic
 #:     bold_italic_font Operator Mono Medium Italic
 
-# font_size 11.0
+font_size 11.0
 
 #: Font size (in pts)
 
@@ -575,7 +579,7 @@ color15 #fdf6e3
 #: content of windows, etc. Note that this even works over ssh
 #: connections.
 
-# env 
+# env
 
 #: Specify environment variables to set in all child processes. Note
 #: that environment variables are expanded recursively, so if you
@@ -964,7 +968,7 @@ map cmd+minus     change_font_size all -2.0
 #
 # unbind for sanity
 # bind clear scrollback and clear terminal -> remove line (clears any commands) -> send enter for new prompt line
-# 
+#
 map super+k no_op
 map super+k combine : clear_terminal scrollback active : send_text all \x15 : send_text all \x0d
 

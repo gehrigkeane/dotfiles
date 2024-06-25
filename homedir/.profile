@@ -4,8 +4,8 @@
 
 source ~/.shellcolors
 
-source ~/.shellvars
 source ~/.shellsecrets
+source ~/.shellvars
 source ~/.shellfn
 source ~/.shellpaths
 source ~/.shellaliases

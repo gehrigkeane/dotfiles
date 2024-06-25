@@ -13,3 +13,7 @@ export NORMAL="$(tput sgr0)"
 export BLINK="$(tput blink)"
 export REVERSE="$(tput smso)"
 export UNDERLINE="$(tput smul)"
+
+export DEBUG=$CYAN
+export INFO=$POWDER_BLUE
+export WARN=$MAGENTA

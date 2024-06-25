@@ -6,3 +6,6 @@ psutil
 keyring
 tqdm
 yawsso
+git-remote-codecommit
+ruff
+

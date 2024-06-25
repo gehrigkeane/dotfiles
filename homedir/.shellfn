@@ -2,6 +2,79 @@
 # Utility Functions
 #########################################
 
+function update() {
+  # brew
+  printf "${INFO}Updating brew\n${NORMAL}"
+  brew update
+  brew upgrade
+  brew upgrade --cask
+  brew cleanup --prune all -s
+  brew doctor --verbose
+
+  # mise
+  printf "${INFO}Updating mise\n${NORMAL}"
+  mise plugins upgrade
+  mise upgrade
+
+  # zinit
+  printf "${INFO}Updating zinit\n${NORMAL}"
+  zinit update --all
+
+  # tldr
+  printf "${INFO}Updating tldr\n${NORMAL}"
+  tldr --update
+
+  # macOS
+  printf "${WARN}Update macOS? [y|N] ${NORMAL}"
+  read -r response
+  if [[ $response =~ (y|yes|Y) ]]; then
+    printf "${INFO}Updating macOS\n${NORMAL}"
+    sudo softwareupdate -i -a;
+  fi
+}
+
+#
+# AWS
+
+# ref: https://github.com/aws/amazon-ssm-agent/issues/131
+# TODO: https://aws.amazon.com/blogs/mt/bring-your-own-cli-session-manager-configurable-shell-profiles/
+function awssm() {
+  aws ssm start-session \
+    --document-name AWS-StartInteractiveCommand \
+    --parameters '{"command": ["sudo --login ; PS1=\"\\t [\\u@\\h \\w]> \" PROMPT_DIRTRIM=2 bash"]}' \
+    --target "$@"
+}
+
+function awsso() {
+  printf "${GREEN}SSOing\n${NORMAL}"
+  aws sso login
+  printf "${GREEN}SSO Complete, yawsso'ing\n${NORMAL}"
+  yawsso
+}
+
+function memusage() {
+  ps -eo size,command --sort -size | grep $1 | awk '{ hr=$1/1024 ; sum +=hr} END {print sum"MiB"}'
+}
+
+#
+# Util
+function killport() {
+  PORT="${1:-8080}"
+  procs=$(lsof -iTCP -sTCP:LISTEN -n -P | rg "$PORT")
+
+  if [ -z "$procs" ]; then
+    printf "${RED}no process found for port=$PORT\n${NORMAL}"
+    return 1
+  fi
+
+  pid=$(printf "$procs" | cut -w -f2)
+  printf "${GREEN}Killing pid=$pid\n>\t$procs\n${NORMAL}"
+  kill "$pid"
+}
+
+#
+#
+
 function bot() {
   ESC_SEQ="\x1b["
   echo

@@ -5,13 +5,11 @@ source ~/.profile
 
 ##############################################################################
 # History Configuration
+# Note: `head ~/.zsh_history` -> : 1671052122:0;xh --verify no "https://prod-offer-service-1671050729.us-east-1.elasticbeanstalk.com/metrics/service.http.client.UNKNOWN.uri._user_userId_redeem"
 ##############################################################################
-# 5_000_000_000
-HISTSIZE=5000000000                                                           # How many lines of history to keep in memory
-SAVEHIST=5000000000                                                           # Number of history entries to save to disk
-HISTFILE=~/.zsh_history                                                       # Where to save history to disk
-export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
-HISTDUP=erase                                                                 # Erase duplicates in the history file
-# setopt    appendhistory                                                     # Append history to the history file (no overwriting)
-setopt    sharehistory                                                        # Share history across terminals
-# setopt    inc_append_history                                                  # Immediately append to the history file, not just when a term is killed
+# moved to ~/.zshrc
+
+# Homebrew M1 artifact
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+eval "$(mise activate zsh --shims)"
