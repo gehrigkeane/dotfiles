@@ -10,6 +10,6 @@ source ~/.profile
 # moved to ~/.zshrc
 
 # Homebrew M1 artifact
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(brew shellenv)"
 
 eval "$(mise activate zsh --shims)"
