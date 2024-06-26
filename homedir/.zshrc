@@ -90,24 +90,17 @@ zinit cdclear -q # <- forget completions provided by Git plugin
 zinit ice lucid wait'0'
 zinit light joshskidmore/zsh-fzf-history-search                               # https://github.com/joshskidmore/zsh-fzf-history-search
 
-# fzf as tab completion
+#
+# fzf-tab (as tab completion)
 zinit ice lucid
 zinit light Aloxaf/fzf-tab                                                    # https://github.com/Aloxaf/fzf-tab
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-# set descriptions format to enable group support
-# NOTE: don't use escape sequences here, fzf-tab will ignore them
-zstyle ':completion:*:descriptions' format '[%d]'
-# set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-zstyle ':completion:*' menu no
-# preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-# switch group using `<` and `>`
-zstyle ':fzf-tab:*' switch-group '<' '>'
-# tmux popup
-# zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+zstyle ':completion:*:git-checkout:*' sort false                              # disable sort when completing `git checkout`
+zstyle ':completion:*:descriptions' format '[%d]'                             # set descriptions format to enable group support
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                         # set list-colors to enable filename colorizing
+zstyle ':completion:*' menu no                                                # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -A1 --color=always $realpath' # preview directory's content with eza when completing cd
+zstyle ':fzf-tab:*' switch-group '<' '>'                                      # switch group using `<` and `>`
+# zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup                              # tmux popup
 
 # substring search
 zinit ice lucid

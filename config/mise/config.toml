@@ -1,0 +1,56 @@
+# ~/.config/mise/config.toml
+
+[tools]
+python = ["3.8", "3.12"]
+mockery = "2.42.2"
+oapi-codegen = "2"
+go = "1.22.2"
+awscli = "2.15"
+go-swagger = "0.30"
+golangci-lint = "1.56"
+goreleaser = "1.24"
+gradle = "8"
+jq = "1.7.1"
+kotlin = "1.9"
+maven = "3.9"
+ruby = "3.3"
+buf = "1.32.1"
+rust = "1.76"
+svu = "1.12"
+terraform = "1.7"
+zig = "0.11"
+java = "corretto-8.402.08.1"
+
+
+[plugins]
+# The default go-swagger plugin fucks up on linux/arm
+go-swagger = "https://github.com/Slijkhuis/asdf-go-swagger"
+
+[settings]
+# plugins can read the versions files used by other version managers (if enabled by the plugin)
+# for example, .nvmrc in the case of node's nvm
+legacy_version_file = false                     # enabled by default (unlike asdf)
+
+# configure `rtx install` to always keep the downloaded archive
+always_keep_download = false        # deleted after install by default
+always_keep_install = false         # deleted on failure by default
+
+# configure how frequently (in minutes) to fetch updated plugin repository changes
+# this is updated whenever a new runtime is installed
+# (note: this isn't currently implemented but there are plans to add it: https://github.com/jdx/rtx/issues/128)
+plugin_autoupdate_last_check_duration = '1 week' # set to 0 to disable updates
+
+# config files with these prefixes will be trusted by default
+trusted_config_paths = [
+    '~/dev',
+]
+
+verbose = false     # set to true to see full installation output, see `RTX_VERBOSE`
+asdf_compat = true  # set to true to ensure .tool-versions will be compatible with asdf, see `RTX_ASDF_COMPAT`
+jobs = 6            # number of plugins or runtimes to install in parallel. The default is `4`.
+raw = false         # set to true to directly pipe plugins to stdin/stdout/stderr
+yes = false         # set to true to automatically answer yes to all prompts
+
+disable_default_shorthands = false # disable the default shorthands, see `RTX_DISABLE_DEFAULT_SHORTHANDS`
+# disable_tools = ['node']           # disable specific tools, generally used to turn off core tools
+experimental = true

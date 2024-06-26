@@ -1,0 +1,37 @@
+# ~/.config/starship.toml
+# https://starship.rs/config/
+
+[aws]
+format='[${symbol}_($profile)_($region)(\[$duration\])]($style) '
+symbol="☁️"
+
+[cmd_duration]
+format="[$duration]($style) "
+min_time=0
+show_milliseconds=true
+style="cyan bold"
+
+[git_branch]
+format="[$symbol$branch(:$remote_branch)]($style) "
+truncation_length=30
+
+[git_commit]
+only_detached=false
+
+[java]
+format='[${symbol}_(${version})]($style) '
+symbol='☕'
+
+[package]
+format='[${symbol}_$version]($style) '
+symbol='📦'
+
+[python]
+format='[${symbol}_${pyenv_prefix}(${version})(\($virtualenv\))]($style) '
+symbol='🐍'
+style="green bold"
+
+[time]
+format="[$time]($style) "
+time_format = "%T%.3f"
+disabled=false
