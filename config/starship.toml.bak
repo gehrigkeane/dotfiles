@@ -1,0 +1,83 @@
+# ~/.config/starship.toml
+# https://starship.rs/config/
+
+#
+#
+[time]
+format="[$time]($style) "
+time_format = "%T%.3f"
+disabled=false
+
+[cmd_duration]
+format="[$duration]($style) "
+min_time=0
+show_milliseconds=true
+style="cyan bold"
+
+
+#
+# AWS
+# ref: https://starship.rs/config/#aws
+[aws]
+format='[${symbol}_($profile)_($region)(\[$duration\])]($style) '
+symbol="☁️"
+
+#
+# Buf
+# ref: https://starship.rs/config/#buf
+[buf]
+format = "| [$symbol($version )]($style)"
+symbol = '🦬 '
+
+#
+# Docker
+# ref: https://starship.rs/config/#docker-context
+[docker_context]
+format = "| [$symbol$context]($style) "
+
+#
+# Git
+# ref: https://starship.rs/config/#git-branch
+[git_branch]
+format="[$symbol$branch(:$remote_branch)]($style) "
+truncation_length=30
+
+[git_commit]
+only_detached=false
+
+[git_metrics]
+disabled = false
+
+#
+# Golang
+# ref: https://starship.rs/config/#go
+[golang]
+format = "| [$symbol($version )]($style) "
+
+#
+# Java
+# ref: https://starship.rs/config/#java
+[java]
+format='| [${symbol}_(${version})]($style) '
+symbol='☕'
+
+#
+# Package Version
+# ref: https://starship.rs/config/#package-version
+[package]
+format='| [${symbol}_$version]($style) '
+symbol='📦'
+
+#
+# Python
+# ref: https://starship.rs/config/#python
+[python]
+format='| [${symbol}_${pyenv_prefix}(${version})(\($virtualenv\))]($style) '
+symbol='🐍'
+style="green bold"
+
+#
+# Terraform:
+# ref: https://starship.rs/config/#terraform
+[terraform]
+disabled = true
