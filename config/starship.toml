@@ -2,6 +2,9 @@
 # https://starship.rs/config/
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# git + vendored deps takes a min...
+command_timeout = 1500
+
 format = """
 [](color_orange)\
 $os\
