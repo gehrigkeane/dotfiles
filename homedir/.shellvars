@@ -23,6 +23,6 @@ export GOPRIVATE="fetch.buf.dev/gen/go"
 export GOPROXY="https://g.keane%40fetchrewards.com:$ARTIFACTORY_PASSWORD@fetch.jfrog.io/artifactory/api/go/go,https://proxy.golang.org,direct"
 export GOSUMDB="sum.golang.org"
 
-export KITTY_CONFIG_DIRECTORY=$HOME
 
+export KITTY_CONFIG_DIRECTORY=$HOME
 export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring

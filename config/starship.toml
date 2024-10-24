@@ -24,7 +24,6 @@ $buf\
 [](fg:color_blue bg:color_bg3)\
 $docker_context\
 [](fg:color_bg3 bg:color_bg1)\
-$time\
 $cmd_duration\
 [ ](fg:color_bg1)\
 $line_break$character"""
@@ -104,17 +103,17 @@ added_style = "bold green bg:color_bg1"
 deleted_style = "bold red bg:color_bg1"
 format = '[([+$added]($added_style) )([-$deleted]($deleted_style) )](fg:color_fg0 bg:color_bg1)'
 
-[time]
-disabled = false
-time_format = "%T%.3f"
-style = "bg:color_bg1"
-format = '[[  $time ](fg:color_fg0 bg:color_bg1)]($style)'
+# [time]
+# disabled = false
+# time_format = "%T%.3f"
+# style = "bg:color_bg1"
+# format = '[[  $time ](fg:color_fg0 bg:color_bg1)]($style)'
 
 [cmd_duration]
 min_time=0
 show_milliseconds=true
 style = "bg:color_bg1"
-format='[[󰇂 $duration ](fg:color_fg0 bg:color_bg1)]($style)'
+format='[[ 󰇂 $duration ](fg:color_fg0 bg:color_bg1)]($style)'
 
 [line_break]
 disabled = false
