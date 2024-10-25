@@ -13,8 +13,9 @@ function update() {
 
   # mise
   printf "${INFO}Updating mise\n${NORMAL}"
+  mise self-update
   mise plugins upgrade
-  mise upgrade
+  mise upgrade --bump
 
   # zinit
   printf "${INFO}Updating zinit\n${NORMAL}"
