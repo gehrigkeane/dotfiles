@@ -1,1 +1,2 @@
-/Users/gehrigkeane/.dotfiles/homedir/.zshenv
+# fpath=($fpath $HOME/.zsh/func)
+# typeset -U fpath

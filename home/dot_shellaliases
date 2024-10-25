@@ -1,1 +1,178 @@
-/Users/gehrigkeane/.dotfiles/homedir/.shellaliases
+#!/bin/sh
+
+alias c="clear"
+alias m="mise"
+alias asdf="mise"
+alias red="redic-cli"
+alias cm="chezmoi"
+
+# Restore TMUX w/out _dead_ startup session
+# ref: https://github.com/tmux-plugins/tmux-resurrect/issues/139#issuecomment-464392088
+alias mux='pgrep -vx tmux > /dev/null && tmux new -d -s delete-me && tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && tmux kill-session -t delete-me && tmux attach || tmux attach'
+
+# Terraform
+alias tf="terraform"
+alias tfi="terraform init"
+alias tfp="terraform plan"
+alias tfa="terraform apply"
+alias tfv="terraform validate"
+alias tfo="terraform output"
+alias tfw="terraform workspace"
+alias tfws="terraform workspace select"
+alias tfwl="terraform workspace list"
+alias tff="terraform fmt"
+
+#
+# ASDF
+# alias asdfi="asdf install"
+alias asdfd="asdf uninstall"
+
+#
+# forgit
+# ref: https://github.com/wfxr/forgit
+# forgit_log=glo
+# forgit_diff=gd
+forgit_add=fga
+# forgit_reset_head=grh
+forgit_ignore=fgi
+# forgit_checkout_file=gcf
+forgit_checkout_branch=fgcb
+# forgit_branch_delete=gbd
+# forgit_checkout_tag=gct
+forgit_checkout_commit=fgco
+# forgit_revert_commit=grc
+# forgit_clean=gclean
+# forgit_stash_show=gss
+# forgit_cherry_pick=gcp
+# forgit_rebase=grb
+# forgit_blame=gbl
+# forgit_fixup=gfu
+
+# Lock the screen (when going AFK)
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# recursive dos2unix in current directory
+alias dos2lf='dos2unix `find ./ -type f`'
+
+# Flush the DNS on Mac
+alias dnsflush='dscacheutil -flushcache'
+
+# Empty the Trash on all mounted volumes and the main HDD.
+# Also, clear Apple’s System Logs to improve shell startup speed.
+# Finally, clear download history from quarantine. https://mths.be/bum
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+# Show network connections
+# Often useful to prefix with SUDO to see more system level network usage
+alias network.connections='lsof -l -i +L -R -V'
+alias network.established='lsof -l -i +L -R -V | grep ESTABLISHED'
+alias network.externalip='curl -s http://checkip.dyndns.org/ | sed "s/[a-zA-Z<>/ :]//g"'
+alias network.internalip="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'"
+
+# Directory listings
+# LS_COLORS='no=01;37:fi=01;37:di=07;96:ln=01;36:pi=01;32:so=01;35:do=01;35:bd=01;33:cd=01;33:ex=01;31:mi=00;05;37:or=00;05;37:'
+# -G Add colors to ls
+# -l Long format
+# -h Short size suffixes (B, K, M, G, P)
+# -p Postpend slash to folders
+alias l='lsd -Al'
+alias ld='lsd -Al --total-size'
+alias lt='lsd --tree'
+# alias ls='ls -haltrG'
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+# Copy and paste and prune the usless newline
+alias pbcopynn='tr -d "\n" | pbcopy'
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"
+
+# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+# alias brewup='brew update -f; brew upgrade -f; brew upgrade --cask; brew cleanup --prune all -s; brew doctor --verbose'
+# alias update='sudo softwareupdate -i -a; brewup'
+
+alias jsonfix="pbpaste | jq . | pbcopy"
+
+alias lookbusy="cat /dev/urandom | hexdump -C | grep \"34 32\""
+
+# alias k='kubectl'
+# alias kp='kubectl get pods -o wide'
+# alias kdp='kubectl describe pod'
+# alias kdn='kubectl describe node'
+
+# Docker Alias'
+# alias ec2='ssh -o StrictHostKeyChecking=no -i /home/ec2-user/internal-private-key'
+alias dforce='docker service update --force --with-registry-auth --detach'
+alias dupdate='dforce'
+alias dlogs='docker service logs -f'
+alias dps='docker service ps'
+alias dls='docker service ls'
+alias dscale='docker service scale'
+alias dnode='docker node '
+alias ddrain='dnode update --availability=drain'
+alias dactive='dnode update --availability=active'
+alias dpause='dnode update --availability=pause'
+alias nls='docker node ls'
+alias nps='docker node ps'
+
+# Tool Version Information
+alias wg='which go && go version'
+alias wp='which python && python --version'
+
+# TODO: wrap pipenv management commands in CLI `pipenv_` or something with y/n prompts and directory awareness
+# Refresh lock, uninstall dependencies not in lock, install missing locked dependencies
+alias pipenv_clean='pipenv lock && pipenv clean && pipenv sync --dev'
+# Destroy venv, recompute lock, install dependencies
+alias pipenv_nuke='pipenv --rm && pipenv lock --clear && pipenv sync --dev'
+# Format a file path
+alias pyfmt='p() {pipenv run black $1 && pipenv run isort -rc $1};p'
+
+# Clean python dist artifacts
+alias pydist_clean='\rm -rf dist build *.egg-info'
+
+#
+# Mongo
+#
+alias mongo="docker run --rm -i --name mongo mongo:bionic mongo"
+
+# Files being opened
+# alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
+# Files used, anywhere on the filesystem
+# alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
+# Files in use in the Users directory
+# alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
+# alias game.seek='txt="";for i in {1..20};do txt=$txt"$i. ";done;txt=$txt" Ready or not, here I come";say $txt'
+
+# Git Tools
+# assumes git-up is installed (gem install git-up)
+# switches to 'develop' branch, updates all local branches (nicely using git-up), removes all local branches already merged into 'develop'
+# alias gitdev='git checkout develop; git-up; git branch --merged develop | grep -v "\* develop" | xargs -n 1 git branch -d; git branch;'
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias iplocal="ipconfig getifaddr en0"
+# alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+# Show active network interfaces
+# alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
+# firewall management
+# alias port-forward-enable="echo 'rdr pass inet proto tcp from any to any port 2376 -> 127.0.0.1 port 2376' | sudo pfctl -ef -"
+# alias port-forward-disable="sudo pfctl -F all -f /etc/pf.conf"
+# alias port-forward-list="sudo pfctl -s nat"
+
+# push git repo, but first, use git-up to make sure you are in sync and rebased with the remote
+# alias pushup="git-up && git push"
+# Set the extended MacOS attributes on a file such that Quicklook will open it as text
+# alias qltext='xattr -wx com.apple.FinderInfo "54 45 58 54 21 52 63 68 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" $1'
+# alias qltext2='osascript -e tell application "Finder" to set file type of ((POSIX file "$1") as alias) to "TEXT"'
+
+# Disable Spotlight
+# alias spotoff="sudo mdutil -a -i off"
+# Enable Spotlight
+# alias spoton="sudo mdutil -a -i on"
+
+# Git Alias Overrides See: https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/git
+alias gcd="git checkout dev"

@@ -1,1 +1,27 @@
-/Users/gehrigkeane/.dotfiles/homedir/.shellvars
+# Set vim as default editor (vi is the default otherwise)
+export EDITOR="vim"
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+#########################################################################
+# Temporary aliases useful for demos, other current projects
+#########################################################################
+#export MYDOWNLOADS=$HOME/Downloads
+#export MYDOCUMENTS=$HOME/Documents
+
+#########################################################################
+# Tool paths
+#########################################################################
+# export MISE_DATA_DIR=$HOME/.asdf
+export MISE_DATA_DIR=$HOME/.local/share/mise
+# export GOPATH=$HOME/dev/go
+
+# ref: https://fetchrewards.atlassian.net/wiki/spaces/DOB/pages/1252818979/Setting+Artifactory+as+the+GOPROXY
+export GONOPROXY=""
+export GONOSUMDB="bitbucket.org/fetchrewards,bitbucket.org/fetch,fetchrewards.com,github.com/fetch-rewards,bitbucket.org/fetch,fetch.com,fetch.buf.dev/gen/go"
+export GOPRIVATE="fetch.buf.dev/gen/go"
+export GOPROXY="https://g.keane%40fetchrewards.com:$ARTIFACTORY_PASSWORD@fetch.jfrog.io/artifactory/api/go/go,https://proxy.golang.org,direct"
+export GOSUMDB="sum.golang.org"
+
+export KITTY_CONFIG_DIRECTORY=$HOME
+export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring

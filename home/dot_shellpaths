@@ -1,1 +1,39 @@
-/Users/gehrigkeane/.dotfiles/homedir/.shellpaths
+#########################################################################
+# My Scripts
+#########################################################################
+export PATH=$PATH:.
+
+#########################################################################
+# Tools
+#########################################################################
+export PATH=/usr/local/sbin:$PATH
+
+# Place homebrew binaries ahead of /usr/bin
+export PATH=/opt/homebrew/bin/:$PATH
+
+export PATH=/usr/local/bin:$PATH
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
+
+# Golang Binaries
+export PATH=$PATH:$GOPATH/bin
+
+# Poetry
+export PATH=$HOME/.local/bin:$PATH
+
+#########################################################################
+# Coreutils
+#########################################################################
+# Hard code coreutils directory for startup efficiency
+# export PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
+export PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin
+export PATH=$PATH:/usr/local/opt/gettext/bin
+
+# Set GNU Tar as default
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+
+# export PATH="/usr/local/opt/ncurses/bin:$PATH"
+# export PATH="/usr/local/opt/openssl/bin:$PATH"
+# export PATH="/usr/local/opt/readline/bin:$PATH"
+# export PATH="/usr/local/opt/ruby/bin:$PATH"
+# export PATH="/usr/local/opt/sqlite/bin:$PATH"
+# export PATH="/usr/local/opt/mysql-client/bin:$PATH"
