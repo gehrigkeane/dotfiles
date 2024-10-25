@@ -1,0 +1,74 @@
+[general]
+live_config_reload = true
+
+# import = [
+#     "~/.config/alacritty/themes/themes/oceanic_next.toml"
+# ]
+
+[window]
+decorations = "Full"
+opacity = 0.95
+startup_mode = "Windowed"
+
+[scrolling]
+history = 100000
+multiplier = 1
+
+[font]
+normal = { family = "SauceCodePro Nerd Font Mono", style = "Regular" }
+size = 12
+
+# [colors]
+# primary = { foreground = "#839495", background = "#002833" }
+# Default colors
+[colors.primary]
+background = '#1b2b34'
+foreground = '#d8dee9'
+
+# Normal colors
+[colors.normal]
+black   = '#29414f'
+red     = '#ec5f67'
+green   = '#99c794'
+yellow  = '#fac863'
+blue    = '#6699cc'
+magenta = '#c594c5'
+cyan    = '#5fb3b3'
+white   = '#65737e'
+
+# Bright colors
+[colors.bright]
+black   = '#405860'
+red     = '#ec5f67'
+green   = '#99c794'
+yellow  = '#fac863'
+blue    = '#6699cc'
+magenta = '#c594c5'
+cyan    = '#5fb3b3'
+white   = '#adb5c0'
+
+[keyboard]
+
+bindings = [
+  #
+  # Reset Font Size
+  {key = "+", mods = "Command | Shift", action = "ResetFontSize"},
+  #
+  # Undo
+  {key = "z", mods = "Command", chars = "\u001f"},
+  #
+  # Command: Move + Delete
+  {key = "ArrowLeft", mods = "Command", chars = "\u0001"},
+  {key = "ArrowRight", mods = "Command", chars = "\u0005"},
+  {key = "Backspace", mods = "Command", chars = "\u0015"}, # del back
+  {key = "Backspace", mods = "Command|Shift", chars = "\u000b"}, # del forward
+  #
+  # Option: Move + Delete
+  {key = "ArrowLeft", mods = "Option", chars = "\u001B\u0062"},
+  {key = "ArrowRight", mods = "Option", chars = "\u001B\u0066"},
+  {key = "Backspace", mods = "Option", chars = "\u0017"}, # del back
+  {key = "Backspace", mods = "Option|Shift", chars = "\u001b\u0064"}, # del forward
+  #
+  # Unbind
+  {key = "CapsLock", action = "ReceiveChar"}
+]
