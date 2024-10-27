@@ -1,23 +1,24 @@
 # ~/.config/mise/config.toml
 
 [tools]
-python = ["3.8", "3.13"]
-mockery = "latest"
-go = "latest"
 awscli = "latest"
-gradle = "latest"
-jq = "latest"
-maven = "latest"
-ruby = "latest"
-svu = "latest"
-terraform = "latest"
+buf = "latest"
+go = "latest"
 golangci-lint = "latest"
 goreleaser = "latest"
-kotlin = "latest"
-buf = "latest"
-rust = "latest"
-zig = "latest"
+gradle = "latest"
 java = "corretto-23.0.1.8"
+jq = "latest"
+kotlin = "latest"
+maven = "latest"
+mockery = "latest"
+python = ["3.8", "3.13"]
+ruby = "latest"
+rust = "latest"
+usage = "latest"
+svu = "latest"
+terraform = "latest"
+zig = "latest"
 
 
 [plugins]

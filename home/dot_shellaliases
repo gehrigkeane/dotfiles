@@ -5,22 +5,23 @@ alias m="mise"
 alias asdf="mise"
 alias red="redic-cli"
 alias cm="chezmoi"
+alias du="dust"
 
 # Restore TMUX w/out _dead_ startup session
 # ref: https://github.com/tmux-plugins/tmux-resurrect/issues/139#issuecomment-464392088
 alias mux='pgrep -vx tmux > /dev/null && tmux new -d -s delete-me && tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && tmux kill-session -t delete-me && tmux attach || tmux attach'
 
 # Terraform
-alias tf="terraform"
-alias tfi="terraform init"
-alias tfp="terraform plan"
-alias tfa="terraform apply"
-alias tfv="terraform validate"
-alias tfo="terraform output"
-alias tfw="terraform workspace"
-alias tfws="terraform workspace select"
-alias tfwl="terraform workspace list"
-alias tff="terraform fmt"
+alias tf="tofu"
+alias tfi="tofu init"
+alias tfp="tofu plan"
+alias tfa="tofu apply"
+alias tfv="tofu validate"
+alias tfo="tofu output"
+alias tfw="tofu workspace"
+alias tfws="tofu workspace select"
+alias tfwl="tofu workspace list"
+alias tff="tofu fmt"
 
 #
 # ASDF

@@ -12,7 +12,6 @@ export PATH=/usr/local/sbin:$PATH
 export PATH=/opt/homebrew/bin/:$PATH
 
 export PATH=/usr/local/bin:$PATH
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
 
 # Golang Binaries
 export PATH=$PATH:$GOPATH/bin
@@ -21,19 +20,20 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$HOME/.local/bin:$PATH
 
 #########################################################################
-# Coreutils
+# GNU Utilities
 #########################################################################
-# Hard code coreutils directory for startup efficiency
+
 # export PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
-export PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin
-export PATH=$PATH:/usr/local/opt/gettext/bin
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
-# Set GNU Tar as default
-export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+# export PATH=$PATH:$(brew --prefix findutils)/libexec/gnubin
+export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
 
-# export PATH="/usr/local/opt/ncurses/bin:$PATH"
-# export PATH="/usr/local/opt/openssl/bin:$PATH"
-# export PATH="/usr/local/opt/readline/bin:$PATH"
-# export PATH="/usr/local/opt/ruby/bin:$PATH"
-# export PATH="/usr/local/opt/sqlite/bin:$PATH"
-# export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+# export PATH=$PATH:$(brew --prefix gawk)/libexec/gnubin
+export PATH="/opt/homebrew/opt/gawk/libexec/gnubin:$PATH"
+
+# export PATH=$PATH:$(brew --prefix gnu-sed)/libexec/gnubin
+export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+
+# export PATH=$PATH:$(brew --prefix grep)/libexec/gnubin
+export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
