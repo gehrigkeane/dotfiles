@@ -1,11 +1,7 @@
 #
 # Brew Taps (see formulae below)
 #
-tap "homebrew/cask"
-tap "homebrew/cask-drivers"
-tap "homebrew/cask-fonts"
-tap "homebrew/cask-versions"
-tap "homebrew/core"
+
 tap "homebrew/services"
 
 #
@@ -76,7 +72,7 @@ brew "crane"                                        # https://github.com/google/
 brew "dive"                                         # https://github.com/wagoodman/dive Tool for exploring each layer in a docker image
 brew "dos2unix"                                     # https://waterlan.home.xs4all.nl/dos2unix.html Convert text between DOS, UNIX, and Mac formats
 brew "dust"                                         # https://github.com/bootandy/dust More intuitive version of du in rust
-brew "ec2-instance-selector"                        # https://github.com/aws/amazon-ec2-instance-selector/ EC2 Instance Selector is a tool to filter EC2 instance types based on resource criteria
+brew "aws/tap/ec2-instance-selector"                        # https://github.com/aws/amazon-ec2-instance-selector/ EC2 Instance Selector is a tool to filter EC2 instance types based on resource criteria
 brew "ffmpeg"                                       # https://ffmpeg.org/ Play, record, convert, and stream audio and video
 brew "fzf"                                          # https://github.com/junegunn/fzf A command-line fuzzy finder
 brew "gh"                                           # https://cli.github.com/ GitHub command-line tool
@@ -92,7 +88,7 @@ brew "mise"                                         # https://mise.jdx.dev/ Poly
 brew "ncdu"                                         # https://dev.yorhel.nl/ncdu NCurses Disk Usage
 brew "nmap"                                         # https://nmap.org/ Port scanning utility for large networks
 brew "nvim"                                         # https://neovim.io/ Ambitious Vim-fork focused on extensibility and agility
-brew "ocr"                                          # https://github.com/schappim/macOCR Get any text on your screen into your clipboard.
+brew "schappim/ocr/ocr"                                          # https://github.com/schappim/macOCR Get any text on your screen into your clipboard.
 brew "pgcli"                                        # https://pgcli.com/ CLI for Postgres with auto-completion and syntax highlighting
 brew "potrace"                                      # (imagemagick plugin) https://potrace.sourceforge.net/ Convert bitmaps to vector graphics
 brew "ripgrep"                                      # https://github.com/BurntSushi/ripgrep Search tool like grep and The Silver Searcher
@@ -115,7 +111,7 @@ brew "yt-dlp"                                       # https://github.com/yt-dlp/
 # Brew Casks
 #
 cask "aerial"                                       # https://github.com/JohnCoates/Aerial Pretty screen-savers
-cask "aerospace"                                    # https://github.com/nikitabobko/AeroSpace AeroSpace is an i3-like tiling window manager for macOS
+cask "nikitabobko/tap/aerospace"                                    # https://github.com/nikitabobko/AeroSpace AeroSpace is an i3-like tiling window manager for macOS
 cask "alacritty"                                    # https://github.com/alacritty/alacritty/ GPU-accelerated terminal emulator
 cask "bartender"                                    # Not free software https://www.macbartender.com/
 cask "bitwarden"                                    # https://bitwarden.com/ The definitive best personal credential manager

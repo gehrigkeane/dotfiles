@@ -1,0 +1,33 @@
+# Added by OrbStack: 'orb' SSH host for Linux machines
+# This only works if it's at the top of ssh_config (before any Host blocks).
+# Comment this line if you don't want it to be added again.
+Include ~/.orbstack/ssh/config
+
+# Ref: https://www.ssh.com/ssh/config/
+# Host some_name
+#   HostName some_hostname_or_ip
+#   StrictHostKeyChecking no
+#   IdentityFile ~/.ssh/some_private_key
+#   User some_target_host_user
+
+# Multiple keys for the same host?
+# ref: https://stevenharman.net/configure-ssh-keys-for-multiple-github-accounts
+
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/gehrigkeane_gmail
+  AddKeysToAgent yes
+
+Host github-fetch
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/gkeane_fetch
+  AddKeysToAgent yes
+
+Host bitbucket.com
+  HostName bitbucket.org
+  User git
+  IdentityFile ~/.ssh/gkeane_fetch
+  AddKeysToAgent yes
+

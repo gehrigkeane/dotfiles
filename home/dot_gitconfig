@@ -16,6 +16,10 @@
   # status = auto
   # branch = auto
 
+
+[url "github-fetch:fetch-rewards"]
+  insteadOf = git@github.com:fetch-rewards
+
 [url "git@bitbucket.org:"]
   insteadOf = https://bitbucket.org/
 # ref: https://github.com/golang/go/issues/27344#issuecomment-656314963
