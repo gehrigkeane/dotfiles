@@ -1,7 +1,16 @@
 #
 # Brew Taps (see formulae below)
 #
+<<<<<<< HEAD
 
+||||||| parent of b3605a4 (mo updates)
+tap "homebrew/cask"
+tap "homebrew/cask-drivers"
+tap "homebrew/cask-fonts"
+tap "homebrew/cask-versions"
+tap "homebrew/core"
+=======
+>>>>>>> b3605a4 (mo updates)
 tap "homebrew/services"
 
 #
@@ -72,7 +81,16 @@ brew "crane"                                        # https://github.com/google/
 brew "dive"                                         # https://github.com/wagoodman/dive Tool for exploring each layer in a docker image
 brew "dos2unix"                                     # https://waterlan.home.xs4all.nl/dos2unix.html Convert text between DOS, UNIX, and Mac formats
 brew "dust"                                         # https://github.com/bootandy/dust More intuitive version of du in rust
+<<<<<<< HEAD
 brew "aws/tap/ec2-instance-selector"                        # https://github.com/aws/amazon-ec2-instance-selector/ EC2 Instance Selector is a tool to filter EC2 instance types based on resource criteria
+||||||| parent of b3605a4 (mo updates)
+brew "ec2-instance-selector"                        # https://github.com/aws/amazon-ec2-instance-selector/ EC2 Instance Selector is a tool to filter EC2 instance types based on resource criteria
+=======
+
+tap "aws/tap"
+brew "ec2-instance-selector"                        # https://github.com/aws/amazon-ec2-instance-selector/ EC2 Instance Selector is a tool to filter EC2 instance types based on resource criteria
+
+>>>>>>> b3605a4 (mo updates)
 brew "ffmpeg"                                       # https://ffmpeg.org/ Play, record, convert, and stream audio and video
 brew "fzf"                                          # https://github.com/junegunn/fzf A command-line fuzzy finder
 brew "gh"                                           # https://cli.github.com/ GitHub command-line tool
@@ -88,7 +106,16 @@ brew "mise"                                         # https://mise.jdx.dev/ Poly
 brew "ncdu"                                         # https://dev.yorhel.nl/ncdu NCurses Disk Usage
 brew "nmap"                                         # https://nmap.org/ Port scanning utility for large networks
 brew "nvim"                                         # https://neovim.io/ Ambitious Vim-fork focused on extensibility and agility
+<<<<<<< HEAD
 brew "schappim/ocr/ocr"                                          # https://github.com/schappim/macOCR Get any text on your screen into your clipboard.
+||||||| parent of b3605a4 (mo updates)
+brew "ocr"                                          # https://github.com/schappim/macOCR Get any text on your screen into your clipboard.
+=======
+
+tap "schappim/ocr"
+brew "ocr"                                          # https://github.com/schappim/macOCR Get any text on your screen into your clipboard.
+
+>>>>>>> b3605a4 (mo updates)
 brew "pgcli"                                        # https://pgcli.com/ CLI for Postgres with auto-completion and syntax highlighting
 brew "potrace"                                      # (imagemagick plugin) https://potrace.sourceforge.net/ Convert bitmaps to vector graphics
 brew "ripgrep"                                      # https://github.com/BurntSushi/ripgrep Search tool like grep and The Silver Searcher
@@ -102,6 +129,7 @@ brew "trash"                                        # https://hasseg.org/trash/ 
 brew "vegeta"                                       # https://github.com/tsenart/vegeta HTTP load testing tool and library
 brew "vim"                                          # https://www.vim.org/ Up-to-date vim replacement
 brew "watch"                                        # https://gitlab.com/procps-ng/procps Executes a program periodically, showing output fullscreen
+brew "wireguard-go"                                 # https://www.wireguard.com/ Userspace Go implementation of WireGuard
 brew "wireguard-tools"                              # https://www.wireguard.com/ Tools for the WireGuard secure network tunnel
 brew "xh"                                           # https://github.com/ducaale/xh Modern cURL + features
 brew "yazi"                                         # https://github.com/sxyazi/yazi Blazing fast terminal file manager written in Rust, based on async I/O
@@ -117,6 +145,7 @@ cask "bartender"                                    # Not free software https://
 cask "bitwarden"                                    # https://bitwarden.com/ The definitive best personal credential manager
 cask "brave-browser"                                # https://brave.com/ Chrome but Safe
 cask "chatgpt"                                      # https://chatgpt.com/ OpenAI's official ChatGPT desktop app
+cask "cloudflare-warp"                              # https://cloudflarewarp.com/ CloudFlare WARP Client
 cask "discord"                                      # https://discord.com/
 cask "elgato-control-center"                        # https://www.elgato.com/ww/en/s/downloads Control your Elgato key lights
 cask "elgato-stream-deck"                           # https://www.elgato.com/ww/en/s/downloads Assign keys, and then decorate and label them
@@ -133,9 +162,8 @@ cask "istat-menus"                                  # Not free software https://
 cask "jetbrains-toolbox"                            # https://www.jetbrains.com/toolbox-app
 cask "karabiner-elements"                           # https://pqrs.org/osx/karabiner/ A powerful and stable keyboard customizer for macOS
 cask "key-codes"                                    # https://manytricks.com/keycodes/ Display key code, unicode value and modifier keys state for any key combination
-cask "logitech-camera-settings"                     # https://support.logi.com/hc/en-us/articles/360049055854
-cask "logitech-g-hub"                               # https://www.logitechg.com/en-us/innovation/g-hub.html Support for Logitech G gear
-cask "mas"                                          # https://github.com/mas-cli/mas Mac App Store command-line interface
+# cask "logitech-camera-settings"                     # https://support.logi.com/hc/en-us/articles/360049055854
+# cask "logitech-g-hub"                               # https://www.logitechg.com/en-us/innovation/g-hub.html Support for Logitech G gear
 cask "mullvadvpn"                                   # https://mullvad.net/ VPN client
 cask "obsidian"                                     # https://obsidian.md/ Knowledge base that works on top of a local folder of plain text Markdown files
 cask "orbstack"                                     # https://orbstack.dev/ Replacement for Docker Desktop
@@ -148,5 +176,4 @@ cask "signal"                                       # https://signal.org/
 cask "slack"                                        # https://slack.com/
 cask "spotify"                                      # https://www.spotify.com/
 cask "visual-studio-code"                           # https://code.visualstudio.com/ Code editing redefined
-cask "wireguard-go"                                 # https://www.wireguard.com/ Userspace Go implementation of WireGuard
 cask "zoom"                                         # https://www.zoom.us/

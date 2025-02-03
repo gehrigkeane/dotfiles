@@ -12,7 +12,7 @@ jq = "latest"
 kotlin = "latest"
 maven = "latest"
 mockery = "latest"
-python = ["3.8", "3.13"]
+python = "3.13"
 ruby = "latest"
 rust = "latest"
 usage = "latest"
@@ -21,7 +21,7 @@ terraform = "latest"
 zig = "latest"
 
 
-[plugins]
+[alias]
 # The default go-swagger plugin fucks up on linux/arm
 go-swagger = "https://github.com/Slijkhuis/asdf-go-swagger"
 

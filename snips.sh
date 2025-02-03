@@ -83,3 +83,7 @@ aws s3 cp /tmp/dump.hprof s3://offer-service/dump/2023_07_06.hprof
 # ref: https://stackoverflow.com/a/34999317/7792536
 rsvg-convert -a -w 200 -h 200 rect.svg > rect-rsvg.png
 convert -background none -resize 200x200 -gravity center -extent 200x200 rect-rsvg.png rect-correct.png
+
+# Shrink an PNG
+brew install pngquant
+pngquant <some_file>
