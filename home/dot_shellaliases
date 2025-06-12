@@ -1,5 +1,10 @@
 #!/bin/sh
 
+#
+# Granted
+# ref: 
+alias assume=". assume"
+
 alias c="clear"
 alias m="mise"
 alias asdf="mise"
@@ -22,6 +27,12 @@ alias tfw="tofu workspace"
 alias tfws="tofu workspace select"
 alias tfwl="tofu workspace list"
 alias tff="tofu fmt"
+
+
+# SVU
+# ref: 
+alias bump="svu next --tag.mode all --verbose"
+alias bumpa="svu prerelease --prerelease='alpha' --tag.mode all --verbose"
 
 #
 # ASDF

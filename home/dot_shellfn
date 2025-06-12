@@ -37,6 +37,15 @@ function update() {
 #
 # AWS
 
+func sqsl() {
+  URL=$(aws sqs get-queue-url --queue-name "$1" --query 'QueueUrl' --output text)
+
+  aws sqs get-queue-attributes \
+  --queue-url "$URL" \
+  --attribute-names ApproximateNumberOfMessages ApproximateNumberOfMessagesNotVisible ApproximateNumberOfMessagesDelayed \
+  --query 'Attributes' --output json
+}
+
 # ref: https://github.com/aws/amazon-ssm-agent/issues/131
 # TODO: https://aws.amazon.com/blogs/mt/bring-your-own-cli-session-manager-configurable-shell-profiles/
 function awssm() {

@@ -12,7 +12,11 @@
 autoload -U select-word-style
 select-word-style bash
 
-export TERM="xterm-ghostty"
+export TERM=xterm-256color
+if [[ "$TERM_PROGRAM" == "ghostty" || "$TERM_PROGRAM" == "tmux" ]]; then
+    export TERM="xterm-ghostty"
+fi
+
 # export TERM="xterm-256color"
 export LESS=-JMQRiFX
 
@@ -86,7 +90,6 @@ zinit snippet OMZ::lib/git.zsh
 zinit snippet OMZP::git
 zinit cdclear -q # <- forget completions provided by Git plugin
 
-
 # fzf history
 zinit ice lucid wait'0'
 zinit light joshskidmore/zsh-fzf-history-search                               # https://github.com/joshskidmore/zsh-fzf-history-search
@@ -101,7 +104,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                         # 
 zstyle ':completion:*' menu no                                                # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -A1 --color=always $realpath' # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:*' switch-group '<' '>'                                      # switch group using `<` and `>`
-# zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup                              # tmux popup
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup                              # tmux popup
 
 # substring search
 zinit ice lucid
@@ -170,12 +173,21 @@ bindkey "^X^_" redo
 # bindkey '^[[B' down-line-or-search
 
 #
+# Zoxide
+# ref: https://github.com/ajeetdsouza/zoxide
+eval "$(zoxide init zsh)"
+
+#
 # Mise
 # ref: https://github.com/jdx/mise
 #
 eval "$(mise completion zsh)"
 eval "$(mise activate zsh)"
 eval "$(ln -sfn $MISE_DATA_DIR $HOME/.asdf)"
+
+#
+# Custom Tools
+eval "$(pcs completion zsh)"
 
 #
 # Starship (last line)

@@ -13,7 +13,7 @@ xh get "https://prod-brand-service.fetchrewards.com/v2/brands" \
 # numfmt: --from-unit=1024 b/c GitHub size is in KiB
 gh api --method GET /repos/fetch-rewards/partner-file-service | jq '.size' | numfmt --from-unit=1024 --to=iec-i
 
-
+🔥
 #
 # AWS
 

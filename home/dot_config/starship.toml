@@ -23,7 +23,6 @@ $kotlin\
 $python\
 $rust\
 \
-$buf\
 [](fg:color_blue bg:color_bg3)\
 $docker_context\
 [](fg:color_bg3 bg:color_bg1)\

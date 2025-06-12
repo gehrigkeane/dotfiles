@@ -1,1 +1,7 @@
+font-family = "SauceCodePro Nerd Font Mono"
+theme = GruvboxDark
+background-opacity = 0.98
+confirm-close-surface=false
+
+
 keybind = global:ctrl+space=toggle_quick_terminal
