@@ -7,7 +7,7 @@ go = "latest"
 golangci-lint = "latest"
 goreleaser = "latest"
 gradle = "latest"
-java = "corretto-24.0.0.36.2"
+java = "corretto-24.0.2.12.1"
 jq = "latest"
 kotlin = "latest"
 maven = "latest"
@@ -19,6 +19,7 @@ usage = "latest"
 svu = "latest"
 terraform = "latest"
 zig = "latest"
+node = "24.7.0"
 
 
 [alias]

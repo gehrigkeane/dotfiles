@@ -16,13 +16,13 @@ Include ~/.orbstack/ssh/config
 Host github.com
   HostName github.com
   User git
-  IdentityFile ~/.ssh/gehrigkeane_gmail
+  IdentityFile ~/.ssh/gkeane_fetch
   AddKeysToAgent yes
 
-Host github-fetch
+Host github-me
   HostName github.com
   User git
-  IdentityFile ~/.ssh/gkeane_fetch
+  IdentityFile ~/.ssh/gehrigkeane_gmail
   AddKeysToAgent yes
 
 Host bitbucket.com

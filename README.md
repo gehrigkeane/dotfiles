@@ -25,6 +25,10 @@ git clone https://github.com/gehrigkeane/dotfiles.git ~/.local/share/chezmoi
 # TMUX Plugin Manager Install
 # Remeber to `<prefix> + I` to install plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+#
+#
+sudo /usr/sbin/DevToolsSecurity -enable
 ```
 
 

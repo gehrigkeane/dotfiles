@@ -186,6 +186,11 @@ eval "$(mise activate zsh)"
 eval "$(ln -sfn $MISE_DATA_DIR $HOME/.asdf)"
 
 #
+# git-spice
+# ref: https://github.com/abhinav/git-spice
+eval "$(gs shell completion zsh)"
+
+#
 # Custom Tools
 eval "$(pcs completion zsh)"
 

@@ -122,7 +122,7 @@ brew "skate"                                        # https://github.com/charmbr
 brew "slides"                                       # https://github.com/maaslalani/slides Terminal based presentation tool
 brew "starship"                                     # https://starship.rs Cross-shell prompt for astronauts
 brew "tig"                                          # https://jonas.github.io/tig/ Text interface for Git repositories
-brew "tealdeer"                                     # https://tldr.sh/ Simplified and community-driven man pages
+brew "tealdeer"                                     # https://github.com/tealdeer-rs/tealdeer Simplified and community-driven man pages
 brew "tmux"                                         # https://tmux.github.io/ Terminal multiplexer
 brew "trash"                                        # https://hasseg.org/trash/ CLI tool that moves files or folder to the trash
 brew "vegeta"                                       # https://github.com/tsenart/vegeta HTTP load testing tool and library

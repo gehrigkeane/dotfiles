@@ -1,9 +1,17 @@
 [user]
-  name = gehrigkeane
-  email = gehrigkeane@gmail.com
+  name = Gehrig Keane
+  email = g.keane@fetchrewards.com
+
 [github]
   # https://github.com/blog/180-local-github-config
-	user = gehrigkeane
+	user = gehrig-fetch
+
+# Use work config for Fetch Rewards repositories
+[includeIf "gitdir:~/dev/go/src/github.com/gehrig/"]
+  path = ~/.gitconfig-me
+[includeIf "gitdir:~/dev/gehrig/"]
+  path = ~/.gitconfig-me
+
 [color]
 # ui = true is a superset of all the more specific color options
 #  as documented at http://book.git-scm.com/5_customizing_git.html
@@ -17,16 +25,13 @@
   # branch = auto
 
 
-[url "github-fetch:fetch-rewards"]
-  insteadOf = git@github.com:fetch-rewards
-
-[url "git@bitbucket.org:"]
-  insteadOf = https://bitbucket.org/
+# [url "git@bitbucket.org:"]
+#   insteadOf = https://bitbucket.org/
 # ref: https://github.com/golang/go/issues/27344#issuecomment-656314963
 [url "git@bitbucket.org:fetch-rewards"]
   insteadOf = https://bitbucket.org/fetch-rewards
-[url "git@github.com:"]
-  insteadOf = https://github.com/
+# [url "git@github.com:"]
+#   insteadOf = https://github.com/
 
 [color "branch"]
   current = yellow reverse
@@ -125,6 +130,6 @@
 [pull]
 	rebase = true
 [commit]
-	template = /Users/gehrigkeane/.git-commit-template.txt
+	template = /Users/gehrig/.git-commit-template.txt
 [init]
 	defaultBranch = main

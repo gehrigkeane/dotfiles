@@ -5,3 +5,4 @@ confirm-close-surface=false
 
 
 keybind = global:ctrl+space=toggle_quick_terminal
+keybind = shift+enter=text:\n
