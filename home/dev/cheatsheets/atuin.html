@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Atuin Quick Reference — magical shell history</title>
+<link rel="stylesheet" href="cheatsheet.css">
+</head>
+<body>
+
+<nav class="sheet-nav"><div class="inner">
+  <span class="brand">cheatsheets</span>
+  <a href="index.html">index</a>
+  <a href="zellij.html">zellij</a>
+  <a href="atuin.html" class="current">atuin</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <h1>Atuin Quick Reference</h1>
+  <p>SQLite shell history — fuzzy search, per-dir/session context, sync · matched to <code>~/.config/atuin/config.toml</code></p>
+</header>
+
+<nav class="toc">
+  <a href="#mental-model">Mental model</a>
+  <a href="#invoke">Two ways in (↑ vs Ctrl-R)</a>
+  <a href="#tui">Search UI keys</a>
+  <a href="#filter">Filter modes</a>
+  <a href="#search">Search modes</a>
+  <a href="#yours">Your tuned config</a>
+  <a href="#cli">CLI cheatsheet</a>
+  <a href="#stats">Stats</a>
+  <a href="#sync">Sync &amp; account</a>
+  <a href="#daemon">Daemon</a>
+  <a href="#insight">Insight</a>
+</nav>
+
+<section id="mental-model">
+  <h2>Mental model</h2>
+  <p>
+    Atuin replaces your shell's plaintext history file with a <strong>SQLite database</strong> that also
+    records each command's exit code, duration, cwd, session, and host. Every history lookup becomes a
+    query you can <em>filter</em> (by scope) and <em>search</em> (by matching algorithm) — two independent
+    axes. It fully owns history navigation in your zsh: both the <kbd>↑</kbd> arrow and <kbd>Ctrl</kbd>+<kbd>R</kbd>
+    open its TUI, each tuned differently (see below).
+  </p>
+  <div class="insight" style="margin:1.2rem 0 0;">
+    <h3>Filter × Search are orthogonal</h3>
+    <p style="margin-bottom:0;">
+      <strong>Filter mode</strong> = <em>which</em> commands are candidates (this dir? this session? everywhere?).
+      <strong>Search mode</strong> = <em>how</em> your query matches them (prefix? fuzzy?). You change filter with
+      <kbd>Ctrl</kbd>+<kbd>R</kbd> <em>inside</em> the UI; search mode is set in config per entry point.
+    </p>
+  </div>
+</section>
+
+<section id="invoke">
+  <h2>Two ways in — and they behave differently <span class="pill hot">by design</span></h2>
+  <table>
+    <thead><tr><th>Entry point</th><th>Behaviour (your config)</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><kbd>↑</kbd> (up-arrow)</td>
+        <td>Compact <strong>15-line popup</strong>, <strong>prefix</strong> search, <strong>global</strong> filter — mimics zsh's old
+          <code>up-line-or-beginning-search</code>: type the start of a command, press ↑ to walk matches.</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>R</kbd></td>
+        <td>Full interactive UI, <strong>daemon-fuzzy</strong> search, <strong>global</strong> filter — the "explore all my history"
+          entry point. Fuzzy matches anywhere in the command.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:.88rem;color:var(--fg-dim);">
+    Both are wired in <code>~/.zshrc</code> via <code>eval "$(atuin init zsh)"</code>. The up-arrow tuning lives in
+    the <code>*_shell_up_key_binding</code> keys of your config; <kbd>Ctrl</kbd>+<kbd>R</kbd> uses the base
+    <code>search_mode</code>/<code>filter_mode</code>.
+  </p>
+</section>
+
+<section id="tui">
+  <h2>Inside the search UI</h2>
+  <p style="margin-top:0;color:var(--fg-dim);">Default (emacs) keymap. The bottom help row (<code>show_help</code>) always shows live hints for the current mode.</p>
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>type</td><td>Filter history live</td></tr>
+      <tr><td><kbd>↑</kbd>/<kbd>↓</kbd> or <kbd>Ctrl</kbd>+<kbd>p</kbd>/<kbd>Ctrl</kbd>+<kbd>n</kbd></td><td>Move selection</td></tr>
+      <tr><td><kbd>Enter</kbd></td><td><strong>Run</strong> the selected command immediately (<code>enter_accept = true</code>)</td></tr>
+      <tr><td><kbd>Tab</kbd> / <kbd>→</kbd> (at line end)</td><td>Copy selection to the prompt to <strong>edit</strong> instead of run</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>R</kbd></td><td>Cycle <strong>filter mode</strong> (global → host → session → directory → workspace …)</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>1</kbd>–<kbd>9</kbd></td><td>Jump straight to the numbered result</td></tr>
+      <tr><td><kbd>PgUp</kbd> / <kbd>PgDn</kbd></td><td>Scroll by page</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>Close, restoring your original line (<code>exit_mode = return-original</code>, the default)</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>Ctrl</kbd>+<kbd>D</kbd> / <kbd>Ctrl</kbd>+<kbd>G</kbd></td><td>Abort / close</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:.88rem;color:var(--fg-dim);margin-bottom:0;">
+    A <strong>Search</strong> and <strong>Inspect</strong> tab are shown (<code>show_tabs</code>); Inspect surfaces
+    per-command stats. Full, version-exact keymap: <a href="https://docs.atuin.sh/reference/interactive-search/">docs.atuin.sh/reference/interactive-search</a>.
+  </p>
+</section>
+
+<div class="row">
+  <div class="card" id="filter">
+    <h2>Filter modes <span class="pill">Ctrl-R cycles</span></h2>
+    <p style="margin-top:0;color:var(--fg-dim);">Which commands are candidates.</p>
+    <table>
+      <tbody>
+        <tr><td><code>global</code></td><td>Everything, everywhere (your default)</td></tr>
+        <tr><td><code>host</code></td><td>Only this machine</td></tr>
+        <tr><td><code>session</code></td><td>Only this shell session</td></tr>
+        <tr><td><code>session-preload</code></td><td>Session, pre-warmed with prior history</td></tr>
+        <tr><td><code>directory</code></td><td>Only commands run in this exact cwd</td></tr>
+        <tr><td><code>workspace</code></td><td>Anywhere inside the current git repo tree</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" id="search">
+    <h2>Search modes <span class="pill">set in config</span></h2>
+    <p style="margin-top:0;color:var(--fg-dim);">How your query matches.</p>
+    <table>
+      <tbody>
+        <tr><td><code>prefix</code></td><td>Match from the start (your <kbd>↑</kbd> mode)</td></tr>
+        <tr><td><code>fulltext</code></td><td>Substring match anywhere</td></tr>
+        <tr><td><code>fuzzy</code></td><td>Fuzzy match (skim-style)</td></tr>
+        <tr><td><code>daemon-fuzzy</code></td><td>Fuzzy, executed by the background daemon (your <kbd>Ctrl</kbd>+<kbd>R</kbd> mode)</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.86rem;color:var(--fg-dim);margin-bottom:0;">Override per-search: <code>atuin search --search-mode fuzzy foo</code>.</p>
+  </div>
+</div>
+
+<section id="yours">
+  <h2>Your tuned config <span class="pill new">the non-defaults</span></h2>
+  <table>
+    <thead><tr><th>Setting</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><code>enter_accept = true</code></td><td><kbd>Enter</kbd> runs, <kbd>Tab</kbd> edits</td></tr>
+      <tr><td><code>search_mode = "daemon-fuzzy"</code></td><td>Fuzzy via daemon for <kbd>Ctrl</kbd>+<kbd>R</kbd></td></tr>
+      <tr><td><code>search_mode_shell_up_key_binding = "prefix"</code></td><td>Prefix search for <kbd>↑</kbd></td></tr>
+      <tr><td><code>filter_mode_shell_up_key_binding = "global"</code></td><td>Global scope for <kbd>↑</kbd></td></tr>
+      <tr><td><code>inline_height_shell_up_key_binding = 15</code></td><td>Compact 15-line popup for <kbd>↑</kbd> (no fullscreen takeover)</td></tr>
+      <tr><td><code>[daemon] enabled/autostart = true</code></td><td>Background daemon auto-starts; batches writes &amp; sync</td></tr>
+      <tr><td><code>[ai] enabled = true</code></td><td>Enables the <code>atuin ai</code> assistant</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:.86rem;color:var(--fg-dim);margin-bottom:0;">
+    Left at defaults but worth knowing: <code>secrets_filter = true</code> (auto-skips AWS/GitHub/Slack/Stripe
+    tokens), <code>store_failed = true</code> (keeps non-zero-exit commands), <code>style = "compact"</code>.
+  </p>
+</section>
+
+<section id="cli">
+  <h2>CLI cheatsheet</h2>
+  <pre>atuin search &lt;query&gt;            # non-interactive search (print matches)
+atuin search -i &lt;query&gt;         # open the interactive UI
+atuin search --cwd . -e 0 foo  # filter by directory + exit code
+atuin history list             # dump history
+atuin history last             # the previous command
+atuin import auto              # one-shot import from your old histfile
+atuin doctor                   # diagnose common issues
+atuin info                     # data-dir / env-var locations
+atuin default-config           # print the fully-commented default config.toml
+atuin gen-completions -s zsh   # shell completions
+atuin ai "&lt;question&gt;"           # AI assistant over your history ([ai] enabled)
+atuin kv set / get             # small key-value store synced across machines
+atuin wrapped                  # year-in-review of your shell usage</pre>
+</section>
+
+<div class="row">
+  <div class="card" id="stats">
+    <h2>Stats</h2>
+    <table>
+      <tbody>
+        <tr><td><code>atuin stats</code></td><td>All-time top commands</td></tr>
+        <tr><td><code>atuin stats day</code></td><td>Today (also <code>yesterday</code>, dates, ranges)</td></tr>
+        <tr><td><code>atuin stats week</code> / <code>month</code></td><td>Windowed totals</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.86rem;color:var(--fg-dim);margin-bottom:0;">
+      Tune grouping with <code>[stats] common_subcommands</code> (e.g. count <code>git push</code> vs
+      just <code>git</code>) and <code>common_prefix</code> / <code>ignored_commands</code>.
+    </p>
+  </div>
+
+  <div class="card" id="sync">
+    <h2>Sync &amp; account</h2>
+    <table>
+      <tbody>
+        <tr><td><code>atuin register</code></td><td>Create a sync account</td></tr>
+        <tr><td><code>atuin login</code></td><td>Log in on a new machine</td></tr>
+        <tr><td><code>atuin sync</code></td><td>Sync now (<code>-f</code> forces full)</td></tr>
+        <tr><td><code>atuin status</code></td><td>Show sync state</td></tr>
+        <tr><td><code>atuin key</code></td><td>Print encryption key to move to another machine</td></tr>
+        <tr><td><code>atuin logout</code></td><td>Log out</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.86rem;color:var(--fg-dim);margin-bottom:0;">
+      History is end-to-end encrypted; the server never sees plaintext. <code>auto_sync</code> is on by
+      default, driven by the daemon.
+    </p>
+  </div>
+</div>
+
+<section id="daemon">
+  <h2>Daemon <span class="pill new">enabled in your config</span></h2>
+  <p>
+    With <code>[daemon] enabled = true</code> + <code>autostart = true</code>, a background process owns writes
+    and periodic sync — so <code>daemon-fuzzy</code> searches stay fast and the shell hook does less work.
+    It listens on a unix socket in your atuin data dir.
+  </p>
+  <pre>atuin daemon                    # run/manage the daemon (experimental)
+atuin doctor                    # confirms the daemon is reachable</pre>
+</section>
+
+<div class="insight" id="insight">
+  <h3>★ Getting the most out of it</h3>
+  <ul>
+    <li><strong>Two entry points, two jobs</strong>: reach for <kbd>↑</kbd> when you half-remember the start of a
+      command (prefix, compact); reach for <kbd>Ctrl</kbd>+<kbd>R</kbd> when you're spelunking (fuzzy, full UI).</li>
+    <li><strong>Filter is a live dial</strong>: mash <kbd>Ctrl</kbd>+<kbd>R</kbd> inside the UI to narrow from
+      <em>global</em> to <em>directory</em>/<em>workspace</em> — hugely underused. "What did I run in this repo?"
+      is one keypress away.</li>
+    <li><strong>Exit codes are queryable</strong>: <code>atuin search -e 0</code> (succeeded) or
+      <code>--exclude-exit 0</code> (only failures) turns history into a debugging log.</li>
+    <li><strong>It's a database, so back it up by syncing</strong>: <code>atuin key</code> + <code>atuin login</code>
+      restores full encrypted history on a fresh machine — your muscle memory follows you.</li>
+  </ul>
+</div>
+
+<div class="footer">
+  Generated for <code>~/.config/atuin/config.toml</code> · gruvbox-dark palette
+</div>
+
+</div>
+</body>
+</html>

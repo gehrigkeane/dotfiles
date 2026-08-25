@@ -1,0 +1,199 @@
+/* Shared visual system for ~/dev/cheatsheets/*.html
+ * Palette: gruvbox-dark — matches ghostty (theme "Gruvbox Dark") and the
+ * starship prompt (palette 'gruvbox_dark'), which is the dominant look of
+ * the terminal environment these sheets document.
+ * Every tool sheet links this file and follows the same structure:
+ *   header → nav.toc → sections/cards/tables → .insight → .footer
+ */
+:root {
+  --bg: #1d2021;
+  --bg-soft: #282828;
+  --bg-card: #32302f;
+  --fg: #ebdbb2;
+  --fg-dim: #a89984;
+  --muted: #7c6f64;
+  --accent: #fabd2f;
+  --accent2: #83a598;
+  --green: #b8bb26;
+  --red: #fb4934;
+  --orange: #fe8019;
+  --purple: #d3869b;
+  --border: #3c3836;
+  --kbd-bg: #3c3836;
+  --kbd-border: #504945;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  line-height: 1.55;
+  font-size: 15px;
+  padding: 0 0 6rem;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 1rem; }
+
+/* Cross-sheet navigation — identical on every page */
+.sheet-nav {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+.sheet-nav .inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: .7rem 1.5rem;
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  font-size: .9rem;
+}
+.sheet-nav .brand { color: var(--muted); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; font-size: .78rem; }
+.sheet-nav a { color: var(--fg-dim); text-decoration: none; }
+.sheet-nav a:hover { color: var(--accent); }
+.sheet-nav a.current { color: var(--accent); font-weight: 600; }
+
+header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.2rem;
+  margin-bottom: 2rem;
+}
+h1 {
+  margin: 0 0 .35rem;
+  font-size: 2rem;
+  letter-spacing: -.01em;
+  color: var(--accent);
+}
+header p { margin: 0; color: var(--fg-dim); }
+h2 {
+  margin: 2.4rem 0 .9rem;
+  font-size: 1.25rem;
+  color: var(--accent2);
+  border-left: 3px solid var(--accent2);
+  padding-left: .6rem;
+  letter-spacing: .01em;
+}
+h3 { margin: 1.5rem 0 .6rem; font-size: 1rem; color: var(--orange); }
+p, li { color: var(--fg); }
+code, kbd, pre, .mono {
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+code {
+  background: var(--bg-soft);
+  padding: .08em .35em;
+  border-radius: 4px;
+  font-size: .9em;
+  color: var(--green);
+}
+kbd {
+  display: inline-block;
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 7px;
+  font-size: .85em;
+  color: var(--fg);
+  box-shadow: 0 1px 0 rgba(0,0,0,.2);
+  white-space: nowrap;
+}
+kbd + kbd { margin-left: 3px; }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.25rem; }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+}
+.card h2 { margin-top: 0; }
+table { width: 100%; border-collapse: collapse; margin: .25rem 0 .5rem; }
+th, td {
+  padding: .42rem .5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  font-size: .93rem;
+}
+th { color: var(--fg-dim); font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
+tbody tr:last-child td { border-bottom: none; }
+td:first-child { white-space: nowrap; width: 38%; }
+pre {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: .87rem;
+  line-height: 1.5;
+  color: var(--fg);
+}
+.mode-diagram {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  color: var(--fg);
+}
+.pill {
+  display: inline-block;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  color: var(--fg-dim);
+  padding: 1px 8px;
+  font-size: .72rem;
+  border-radius: 999px;
+  margin-left: .4rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.pill.hot { color: var(--orange); border-color: var(--orange); }
+.pill.new { color: var(--green); border-color: var(--green); }
+.insight {
+  border-left: 3px solid var(--purple);
+  background: rgba(211,134,155,.08);
+  padding: .9rem 1.1rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+}
+.insight h3 { margin-top: 0; color: var(--purple); }
+.toc {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.4rem;
+  column-count: 2;
+  column-gap: 2rem;
+  margin-bottom: 2rem;
+}
+.toc a { color: var(--fg-dim); text-decoration: none; display: block; padding: 2px 0; font-size: .92rem; }
+.toc a:hover { color: var(--accent); }
+a { color: var(--accent2); }
+.footer {
+  margin-top: 3rem;
+  color: var(--muted);
+  font-size: .82rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  padding-top: 1.2rem;
+}
+
+/* Index landing grid */
+.cards-lg { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+.cards-lg a.tool {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.2rem 1.3rem;
+  text-decoration: none;
+  color: var(--fg);
+  transition: border-color .12s ease;
+}
+.cards-lg a.tool:hover { border-color: var(--accent); }
+.cards-lg a.tool h3 { margin: 0 0 .3rem; color: var(--accent); }
+.cards-lg a.tool p { margin: 0; color: var(--fg-dim); font-size: .9rem; }
+
+@media (max-width: 700px) {
+  .toc { column-count: 1; }
+  h1 { font-size: 1.5rem; }
+}

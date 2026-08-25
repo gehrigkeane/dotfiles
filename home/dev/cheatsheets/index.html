@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tool cheatsheets</title>
+<link rel="stylesheet" href="cheatsheet.css">
+</head>
+<body>
+
+<nav class="sheet-nav"><div class="inner">
+  <span class="brand">cheatsheets</span>
+  <a href="index.html" class="current">index</a>
+  <a href="zellij.html">zellij</a>
+  <a href="atuin.html">atuin</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <h1>Tool cheatsheets</h1>
+  <p>Quick references for the deeply feature-rich tools in this setup — each matched to my actual config.</p>
+</header>
+
+<div class="cards-lg">
+  <a class="tool" href="zellij.html">
+    <h3>zellij</h3>
+    <p>Terminal multiplexer. Modes vs tmux prefix, pane/tab/scroll keys, plugins, tmux translation.</p>
+  </a>
+  <a class="tool" href="atuin.html">
+    <h3>atuin</h3>
+    <p>SQLite shell history. ↑ vs Ctrl-R, filter × search modes, sync, stats, daemon.</p>
+  </a>
+</div>
+
+<div class="insight" style="margin-top:2.5rem;">
+  <h3>About these sheets</h3>
+  <p style="margin-bottom:0;">
+    They live in <code>~/dev/cheatsheets/</code> (tracked in the chezmoi dotfiles repo under
+    <code>home/dev/cheatsheets/</code>). Every sheet shares <code>cheatsheet.css</code> (gruvbox-dark, matching
+    ghostty + starship) and the same structure. Open any file directly in a browser — no build step.
+    See <code>README.md</code> for how to add a new tool.
+  </p>
+</div>
+
+<div class="footer">
+  chezmoi-tracked · gruvbox-dark palette · standalone HTML, no build step
+</div>
+
+</div>
+</body>
+</html>

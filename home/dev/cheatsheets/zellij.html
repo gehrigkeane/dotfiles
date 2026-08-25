@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Zellij Quick Reference — onboarding from tmux</title>
+<link rel="stylesheet" href="cheatsheet.css">
+</head>
+<body>
+
+<nav class="sheet-nav"><div class="inner">
+  <span class="brand">cheatsheets</span>
+  <a href="index.html">index</a>
+  <a href="zellij.html" class="current">zellij</a>
+  <a href="atuin.html">atuin</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <h1>Zellij Quick Reference</h1>
+  <p>Onboarding from tmux · matched to <code>~/.config/zellij/config.kdl</code></p>
+</header>
+
+<nav class="toc">
+  <a href="#mental-model">Mental model (vs tmux)</a>
+  <a href="#globals">Always-available bindings</a>
+  <a href="#pane">Pane mode (Ctrl-p)</a>
+  <a href="#tab">Tab mode (Ctrl-t)</a>
+  <a href="#reorder-tabs">Reordering tabs</a>
+  <a href="#resize">Resize mode (Ctrl-n)</a>
+  <a href="#move">Move mode (Ctrl-h)</a>
+  <a href="#scroll">Scroll mode (Ctrl-s)</a>
+  <a href="#session">Session mode (Ctrl-o)</a>
+  <a href="#tmux-mode">Tmux mode (Ctrl-b)</a>
+  <a href="#plugins">Installed plugins</a>
+  <a href="#translation">Tmux → Zellij translation</a>
+  <a href="#beyond-tmux">Things tmux doesn't have</a>
+  <a href="#cli">CLI cheatsheet</a>
+  <a href="#insight">Mental-model insight</a>
+</nav>
+
+<section id="mental-model">
+  <h2>Mental model (vs tmux)</h2>
+  <p>
+    Tmux has one prefix (<kbd>Ctrl</kbd>+<kbd>b</kbd>) then a letter. Zellij has <strong>modes</strong>:
+    you press a mode-switch combo, drop into that mode, run single-letter commands, then
+    <kbd>Enter</kbd>/<kbd>Esc</kbd> returns you to normal. There's also a <em>Tmux mode</em> that mimics tmux prefix-style keys.
+  </p>
+  <pre class="mode-diagram">Normal ──Ctrl-p──▶ Pane     ──Ctrl-n──▶ Resize
+       ──Ctrl-t──▶ Tab      ──Ctrl-h──▶ Move
+       ──Ctrl-s──▶ Scroll   ──Ctrl-o──▶ Session
+       ──Ctrl-b──▶ Tmux     ──Ctrl-g──▶ Locked (toggle)</pre>
+  <p>
+    <kbd>Ctrl</kbd>+<kbd>g</kbd> toggles <strong>Locked</strong> (passes all keys through to the running app —
+    the <code>autolock</code> plugin does this automatically for nvim/fzf/lazygit/etc).
+  </p>
+</section>
+
+<section id="globals">
+  <h2>Always-available <span class="pill">any mode except Locked</span></h2>
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Alt</kbd>+<kbd>n</kbd></td><td>New pane</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>h</kbd>/<kbd>j</kbd>/<kbd>k</kbd>/<kbd>l</kbd></td><td>Move focus (h/l moves tab if at edge). Arrows are unbound at this level so they pass through to the shell for word-nav.</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>i</kbd> / <kbd>Alt</kbd>+<kbd>o</kbd></td><td>Move tab left / right</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>=</kbd> / <kbd>Alt</kbd>+<kbd>-</kbd></td><td>Resize larger / smaller</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>[</kbd> / <kbd>Alt</kbd>+<kbd>]</kbd></td><td>Prev / next swap layout</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>p</kbd> / <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd></td><td>Toggle pane in group / toggle group marking</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>s</kbd></td><td>Open <strong>room</strong> (session/pane switcher)</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>k</kbd></td><td>Clear pane scrollback + redraw shell prompt</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>q</kbd></td><td>Quit zellij</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>g</kbd></td><td>Lock / unlock</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:.88rem;color:var(--fg-dim);">
+    <strong>Note:</strong> <kbd>Alt</kbd>+<kbd>f</kbd> and <kbd>Alt</kbd>+<kbd>b</kbd> (and the <kbd>Alt</kbd>+arrow aliases)
+    are deliberately <em>unbound</em> in <code>config.kdl</code> so Ghostty's Opt-based word-nav
+    (<kbd>Opt</kbd>+<kbd>←</kbd>/<kbd>→</kbd>) reaches the shell. Floating panes toggle from Pane mode
+    (<kbd>Ctrl</kbd>+<kbd>p</kbd> <kbd>w</kbd>), not <kbd>Alt</kbd>+<kbd>f</kbd>.
+  </p>
+</section>
+
+<div class="row">
+  <div class="card" id="pane">
+    <h2>Pane mode <span class="pill">Ctrl-p</span></h2>
+    <table>
+      <tbody>
+        <tr><td><kbd>h</kbd>/<kbd>j</kbd>/<kbd>k</kbd>/<kbd>l</kbd> or arrows</td><td>Move focus</td></tr>
+        <tr><td><kbd>p</kbd></td><td>Cycle focus</td></tr>
+        <tr><td><kbd>n</kbd></td><td>New pane</td></tr>
+        <tr><td><kbd>d</kbd> / <kbd>r</kbd></td><td>New pane down / right</td></tr>
+        <tr><td><kbd>s</kbd></td><td>New <strong>stacked</strong> pane</td></tr>
+        <tr><td><kbd>x</kbd></td><td>Close focused pane</td></tr>
+        <tr><td><kbd>f</kbd></td><td>Fullscreen toggle</td></tr>
+        <tr><td><kbd>z</kbd></td><td>Toggle pane frames</td></tr>
+        <tr><td><kbd>w</kbd></td><td>Toggle floating</td></tr>
+        <tr><td><kbd>e</kbd></td><td>Embed ↔ float</td></tr>
+        <tr><td><kbd>i</kbd></td><td>Pin floating pane (stays on top across tabs)</td></tr>
+        <tr><td><kbd>c</kbd></td><td>Rename pane</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" id="tab">
+    <h2>Tab mode <span class="pill">Ctrl-t</span></h2>
+    <table>
+      <tbody>
+        <tr><td><kbd>n</kbd> / <kbd>x</kbd></td><td>New / close tab</td></tr>
+        <tr><td><kbd>1</kbd>–<kbd>9</kbd></td><td>Jump to tab N</td></tr>
+        <tr><td><kbd>h</kbd>/<kbd>k</kbd>/Left/Up</td><td>Previous tab</td></tr>
+        <tr><td><kbd>l</kbd>/<kbd>j</kbd>/Right/Down</td><td>Next tab</td></tr>
+        <tr><td><kbd>Tab</kbd></td><td>Toggle to last-used tab</td></tr>
+        <tr><td><kbd>r</kbd></td><td>Rename tab</td></tr>
+        <tr><td><kbd>s</kbd></td><td>Sync input across panes in tab</td></tr>
+        <tr><td><kbd>b</kbd></td><td>Break pane into its own tab</td></tr>
+        <tr><td><kbd>[</kbd> / <kbd>]</kbd></td><td>Break pane into tab on left / right</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" id="reorder-tabs">
+    <h2>Reordering tabs <span class="pill">Alt-i / Alt-o</span></h2>
+    <p style="margin-top:0;color:var(--fg-dim);">
+      Tabs are positional, not identifiers — moving a tab renumbers it. There's no
+      "jump tab to position N"; movement is one slot at a time. <strong>No mouse drag
+      support</strong> — <code>zellij:tab-bar</code> doesn't implement it. Keyboard or CLI only.
+    </p>
+    <table>
+      <tbody>
+        <tr><td><kbd>Alt</kbd>+<kbd>i</kbd></td><td>Shuffle focused tab one slot <strong>left</strong> (global, any non-locked mode)</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>o</kbd></td><td>Shuffle focused tab one slot <strong>right</strong></td></tr>
+        <tr><td><code>zellij action move-tab "Left"</code></td><td>Same shuffle, from the shell — useful in scripts</td></tr>
+        <tr><td><code>zellij action move-tab "Right"</code></td><td></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.88rem;color:var(--fg-dim);margin-bottom:0;">
+      <strong>Walk a tab from position N to 1</strong>: focus it (<kbd>Ctrl</kbd>+<kbd>t</kbd> <kbd>N</kbd>),
+      then mash <kbd>Alt</kbd>+<kbd>i</kbd> until it lands. <code>{index}:{name}</code>
+      in the status bar updates live.
+    </p>
+  </div>
+
+  <div class="card" id="resize">
+    <h2>Resize mode <span class="pill">Ctrl-n</span></h2>
+    <table>
+      <tbody>
+        <tr><td><kbd>h</kbd>/<kbd>j</kbd>/<kbd>k</kbd>/<kbd>l</kbd></td><td>Increase toward direction</td></tr>
+        <tr><td><kbd>H</kbd>/<kbd>J</kbd>/<kbd>K</kbd>/<kbd>L</kbd></td><td>Decrease from direction</td></tr>
+        <tr><td><kbd>=</kbd>/<kbd>+</kbd> / <kbd>-</kbd></td><td>Increase / decrease all</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" id="move">
+    <h2>Move mode <span class="pill">Ctrl-h</span></h2>
+    <p style="margin-top:0;color:var(--fg-dim);">Relocate panes within the layout.</p>
+    <table>
+      <tbody>
+        <tr><td><kbd>n</kbd> / <kbd>Tab</kbd></td><td>Cycle pane forward</td></tr>
+        <tr><td><kbd>p</kbd></td><td>Cycle pane backward</td></tr>
+        <tr><td><kbd>h</kbd>/<kbd>j</kbd>/<kbd>k</kbd>/<kbd>l</kbd></td><td>Move pane in direction</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" id="scroll">
+    <h2>Scroll mode <span class="pill">Ctrl-s</span></h2>
+    <table>
+      <tbody>
+        <tr><td><kbd>j</kbd> / <kbd>k</kbd></td><td>Line down / up</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>f</kbd> / <kbd>Ctrl</kbd>+<kbd>b</kbd></td><td>Page down / up (also <kbd>l</kbd>/<kbd>h</kbd>, PgDn/PgUp)</td></tr>
+        <tr><td><kbd>d</kbd> / <kbd>u</kbd></td><td>Half page down / up</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>c</kbd></td><td>Jump to bottom (exit)</td></tr>
+        <tr><td><kbd>e</kbd></td><td><strong>Edit scrollback in <code>$EDITOR</code></strong> ⭐</td></tr>
+        <tr><td><kbd>s</kbd></td><td>Enter search mode</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.88rem;color:var(--fg-dim);margin-bottom:0;">
+      In search mode (<kbd>s</kbd> from scroll): <kbd>n</kbd>/<kbd>p</kbd> next/prev,
+      <kbd>c</kbd> case sensitivity, <kbd>w</kbd> wrap, <kbd>o</kbd> whole word.
+    </p>
+  </div>
+
+  <div class="card" id="session">
+    <h2>Session mode <span class="pill">Ctrl-o</span></h2>
+    <table>
+      <tbody>
+        <tr><td><kbd>d</kbd></td><td><strong>Detach</strong> (like tmux <kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>d</kbd>)</td></tr>
+        <tr><td><kbd>w</kbd></td><td>Session manager (switch / create / resurrect)</td></tr>
+        <tr><td><kbd>l</kbd></td><td>Layout manager</td></tr>
+        <tr><td><kbd>c</kbd></td><td>Configuration plugin</td></tr>
+        <tr><td><kbd>p</kbd></td><td>Plugin manager</td></tr>
+        <tr><td><kbd>s</kbd></td><td>Share session (web)</td></tr>
+        <tr><td><kbd>a</kbd></td><td>About</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<section id="tmux-mode">
+  <h2>Tmux mode <span class="pill hot">Ctrl-b · training wheels</span></h2>
+  <p>Press <kbd>Ctrl</kbd>+<kbd>b</kbd> then:</p>
+  <table>
+    <tbody>
+      <tr><td><kbd>"</kbd> / <kbd>%</kbd></td><td>Split horizontal / vertical (like tmux)</td></tr>
+      <tr><td><kbd>c</kbd></td><td>New tab (tmux: window)</td></tr>
+      <tr><td><kbd>n</kbd> / <kbd>p</kbd></td><td>Next / prev tab</td></tr>
+      <tr><td><kbd>,</kbd></td><td>Rename tab</td></tr>
+      <tr><td><kbd>o</kbd></td><td>Cycle panes</td></tr>
+      <tr><td><kbd>z</kbd></td><td>Zoom (fullscreen)</td></tr>
+      <tr><td><kbd>x</kbd></td><td>Close pane</td></tr>
+      <tr><td><kbd>[</kbd></td><td>Enter scroll/copy mode</td></tr>
+      <tr><td><kbd>Space</kbd></td><td>Next swap layout</td></tr>
+      <tr><td><kbd>d</kbd></td><td>Detach</td></tr>
+      <tr><td><kbd>h</kbd>/<kbd>j</kbd>/<kbd>k</kbd>/<kbd>l</kbd> or arrows</td><td>Move focus</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd></td><td>Send literal <kbd>Ctrl</kbd>+<kbd>b</kbd> to underlying shell</td></tr>
+    </tbody>
+  </table>
+  <p style="color:var(--fg-dim);">
+    Use this while you build muscle memory; switch to native bindings once <kbd>Alt</kbd> movement
+    and <kbd>Ctrl</kbd>+<kbd>p</kbd>/<kbd>t</kbd> feel natural.
+  </p>
+</section>
+
+<section id="plugins">
+  <h2>Plugins in your setup</h2>
+
+  <div class="row">
+    <div class="card">
+      <h3>zellij:tab-bar <span class="pill new">active · top row</span></h3>
+      <p>
+        Native plugin. Renders the tab strip at the top of every tab. Click a tab to focus,
+        scroll to cycle. <strong>No drag-to-reorder</strong> — use <kbd>Alt</kbd>+<kbd>i</kbd>/<kbd>Alt</kbd>+<kbd>o</kbd>.
+        In <code>default.kdl</code> it's configured with <code>hide_swap_layout_indication "true"</code> to drop the right-side swap-layout label.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>zellij:status-bar <span class="pill new">active · bottom 2 rows</span></h3>
+      <p>
+        Native plugin, mounted in <strong>every</strong> layout (default and dev). Top row:
+        session name + mode pill (NORMAL, LOCKED, etc.). Bottom row: context-sensitive keybinding
+        hints for the current mode. Theme-driven by <code>theme "everforest-dark"</code> in
+        <code>config.kdl</code> — no per-layout config.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>autolock <span class="pill new">auto-loads</span></h3>
+      <p>
+        Watches the focused pane's process and auto-flips zellij into <strong>Locked</strong> when you open:
+        <code>nvim</code>, <code>vim</code>, <code>fzf</code>, <code>zoxide</code>, <code>atuin</code>,
+        <code>broot</code>, <code>lazygit</code>, <code>lazydocker</code>, <code>btop</code>, <code>htop</code>.
+        Exits Locked when those quit. So <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> reaches your editor
+        instead of moving panes — no manual <kbd>Ctrl</kbd>+<kbd>g</kbd>.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>room <span class="pill">Alt-s · floating</span></h3>
+      <p>Quick session/pane jumper. Type to filter; Enter to switch. Think tmux <code>choose-tree</code>.</p>
+    </div>
+  </div>
+
+  <div class="insight" style="margin-top:1.5rem;">
+    <h3>Bars are 100% native now</h3>
+    <p style="margin-bottom:0;">
+      The community <code>zjstatus</code> plugin was removed — every layout uses the native
+      <code>zellij:tab-bar</code> + <code>zellij:status-bar</code> for theme integration and zero
+      per-layout config. This means <code>zellij attach &lt;name&gt;</code> (which uses the
+      <code>default</code> layout) and <code>zellij --layout dev</code> now render identical bars.
+      Re-add <code>zjstatus</code> only if you ever need shell-command widgets (kubectl context, etc.)
+      that the native bars don't expose.
+    </p>
+  </div>
+</section>
+
+<section id="translation">
+  <h2>Tmux → Zellij translation</h2>
+  <table>
+    <thead><tr><th>Tmux</th><th>Zellij</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>"</kbd> / <kbd>%</kbd></td><td><kbd>Ctrl</kbd>+<kbd>p</kbd> <kbd>d</kbd> / <kbd>r</kbd> (or Tmux mode)</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>c</kbd></td><td><kbd>Ctrl</kbd>+<kbd>t</kbd> <kbd>n</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>n</kbd> / <kbd>p</kbd></td><td><kbd>Alt</kbd>+<kbd>l</kbd> / <kbd>Alt</kbd>+<kbd>h</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>0</kbd>–<kbd>9</kbd></td><td><kbd>Ctrl</kbd>+<kbd>t</kbd> <kbd>1</kbd>–<kbd>9</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>,</kbd></td><td><kbd>Ctrl</kbd>+<kbd>t</kbd> <kbd>r</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>z</kbd></td><td><kbd>Ctrl</kbd>+<kbd>p</kbd> <kbd>f</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>o</kbd></td><td><kbd>Ctrl</kbd>+<kbd>p</kbd> <kbd>p</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>x</kbd></td><td><kbd>Ctrl</kbd>+<kbd>p</kbd> <kbd>x</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>d</kbd></td><td><kbd>Ctrl</kbd>+<kbd>o</kbd> <kbd>d</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>s</kbd> (sessions)</td><td><kbd>Alt</kbd>+<kbd>s</kbd> (room) or <kbd>Ctrl</kbd>+<kbd>o</kbd> <kbd>w</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>[</kbd> (copy mode)</td><td><kbd>Ctrl</kbd>+<kbd>s</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>!</kbd> (break pane)</td><td><kbd>Ctrl</kbd>+<kbd>t</kbd> <kbd>b</kbd></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>:</kbd> (command)</td><td><kbd>Ctrl</kbd>+<kbd>o</kbd> plugins / <code>zellij action ...</code></td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>b</kbd> <kbd>?</kbd> (list keys)</td><td>no equivalent — keep this card</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="beyond-tmux">
+  <h2>Things tmux doesn't have, worth learning early</h2>
+  <ul>
+    <li><strong>Stacked panes</strong> — <kbd>Ctrl</kbd>+<kbd>p</kbd> <kbd>s</kbd>. Multiple panes stack like a tabbed group within a pane.</li>
+    <li><strong>Floating panes</strong> — <kbd>Ctrl</kbd>+<kbd>p</kbd> <kbd>w</kbd> toggles; <kbd>Ctrl</kbd>+<kbd>p</kbd> <kbd>e</kbd> converts embed↔float; <kbd>Ctrl</kbd>+<kbd>p</kbd> <kbd>i</kbd> pins on top across tabs. Great for a scratch shell.</li>
+    <li><strong>Edit scrollback in <code>$EDITOR</code></strong> — <kbd>Ctrl</kbd>+<kbd>s</kbd> <kbd>e</kbd>. Opens entire scrollback in nvim. Search/yank with full editor power.</li>
+    <li><strong>Pane groups</strong> — <kbd>Alt</kbd>+<kbd>p</kbd> adds focused pane to group; group commands operate on all marked panes.</li>
+    <li><strong>Swap layouts</strong> — <kbd>Alt</kbd>+<kbd>[</kbd> / <kbd>Alt</kbd>+<kbd>]</kbd> cycle predefined arrangements without losing pane content.</li>
+    <li><strong>Session resurrection</strong> — your config has <code>session_serialization true</code> + <code>serialize_pane_viewport true</code>, so <code>zellij attach --create &lt;name&gt;</code> brings back tabs, cwds, <em>and</em> scrollback after reboot.</li>
+  </ul>
+</section>
+
+<section id="cli">
+  <h2>CLI cheatsheet (outside zellij)</h2>
+  <pre>zellij                          # attach to last or create default
+zellij -s work                  # named session
+zellij ls                       # list sessions
+zellij attach work              # attach by name (uses the default layout → native bars)
+zellij kill-session work
+zellij --layout dev             # start with ~/.config/zellij/layouts/dev.kdl
+zellij action &lt;cmd&gt;             # run any keybind action from shell
+zellij run -- htop              # spawn pane running command
+zellij edit ~/notes.md          # open file in pane via $EDITOR</pre>
+</section>
+
+<div class="insight" id="insight">
+  <h3>★ Mental-model insight</h3>
+  <ul>
+    <li><strong>Modes vs prefix</strong>: tmux's <kbd>Ctrl</kbd>+<kbd>b</kbd> &lt;key&gt; is one keystroke per command;
+      zellij's mode is sticky — useful when doing many resize/scroll ops in a row, awkward for single quick actions.
+      That's why the <kbd>Alt</kbd> global bindings exist: the most common ops bypass modes entirely.</li>
+    <li><strong>Locked mode is the killer abstraction</strong>: tmux's biggest wart is keystroke conflict
+      with terminal apps. <code>autolock</code> + Locked mode means your editor never fights for
+      <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> again — the single biggest QoL win over tmux.</li>
+    <li><strong>Scrollback as a buffer is editor-grade</strong>: <kbd>Ctrl</kbd>+<kbd>s</kbd> <kbd>e</kbd>
+      makes scrollback a first-class text artifact you edit in nvim. tmux's copy-mode is a shadow of this.</li>
+  </ul>
+</div>
+
+<div class="footer">
+  Generated for <code>~/.config/zellij/config.kdl</code> · everforest-dark theme
+</div>
+
+</div>
+</body>
+</html>
