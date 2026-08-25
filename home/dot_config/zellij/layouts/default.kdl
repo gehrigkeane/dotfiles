@@ -1,7 +1,7 @@
 // Default layout — single full-screen pane with native tab-bar + status-bar.
 // Declared explicitly so it's chezmoi-trackable instead of relying on the
 // built-in default. Mirrors `zellij`'s OOTB experience, theme-driven by
-// `theme "gruvbox-dark"` in config.kdl.
+// `theme "everforest-dark"` in config.kdl.
 layout {
     pane size=1 borderless=true {
         plugin location="zellij:tab-bar" {

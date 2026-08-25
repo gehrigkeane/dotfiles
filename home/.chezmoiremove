@@ -1,0 +1,4 @@
+# Targets to remove on `chezmoi apply` (paths relative to $HOME).
+# Retired zellij tour deck + its layout (superseded by ~/dev/cheatsheets/).
+.config/zellij/layouts/tour.kdl
+dev/slides/zellij-tour

@@ -22,6 +22,6 @@ layout {
         plugin location="zellij:tab-bar"
     }
     pane size=2 borderless=true {
-        plugin location="zjstatus"
+        plugin location="zellij:status-bar"
     }
 }

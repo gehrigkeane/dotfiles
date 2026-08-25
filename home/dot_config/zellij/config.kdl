@@ -260,10 +260,8 @@ plugins {
     // Community plugins (downloaded + cached on first use).
     // Pinned to release tags for reproducibility — bump intentionally.
     // refs:
-    //   https://github.com/dj95/zjstatus
     //   https://github.com/fresh2dev/zellij-autolock
     //   https://github.com/rvcas/room
-    zjstatus location="https://github.com/dj95/zjstatus/releases/download/v0.23.0/zjstatus.wasm"
     autolock location="https://github.com/fresh2dev/zellij-autolock/releases/download/0.2.2/zellij-autolock.wasm" {
         triggers "nvim|vim|fzf|zoxide|atuin|broot|lazygit|lazydocker|btop|htop"
     }
