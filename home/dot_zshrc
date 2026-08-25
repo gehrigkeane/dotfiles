@@ -211,7 +211,8 @@ eval "$(gs shell completion zsh)"
 #       once you're happy with atuin, remove that `zinit light joshskidmore/...` line.
 # Guarded so this file stays valid before atuin is installed.
 if command -v atuin >/dev/null 2>&1; then
-  eval "$(atuin init zsh)"
+  # --disable-up-arrow: atuin owns Ctrl-R only; leave ↑ as normal zsh history nav
+  eval "$(atuin init zsh --disable-up-arrow)"
 fi
 
 #
