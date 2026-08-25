@@ -62,6 +62,64 @@ function awsso() {
   #yawsso
 }
 
+# List the Bedrock models a profile can ACTUALLY invoke, not just what exists.
+# `list-foundation-models` shows every model regardless of access, so the only
+# correct test is a real invocation: this probes each candidate with a 1-token
+# Converse call and reports 200 (accessible) vs AccessDenied vs other errors.
+# Tests cross-region inference profiles too, since modern models (Claude 4.x)
+# are only invokable via a profile, not the bare model id.
+#
+# Uses the `bedrock` AWS profile (the one entitled to invoke models).
+# Pass an rg search term to narrow the model ids that get probed.
+# Requires bedrock:InvokeModel. Note: each probe is a tiny (billable) call.
+# usage: bedrock-access [modelid-search-term]
+function bedrock-access() {
+  local search="${1:-.}"
+  local profile="bedrock"
+  local GREEN RED YELLOW NORMAL
+  GREEN=$(tput setaf 2); RED=$(tput setaf 1); YELLOW=$(tput setaf 3); NORMAL=$(tput sgr0)
+
+  printf "${YELLOW}Probing Bedrock model access via profile '%s' (as %s)\n${NORMAL}" \
+    "$profile" "$(aws --profile "$profile" sts get-caller-identity --query Arn --output text 2>/dev/null)"
+
+  # Candidates: active inference profiles + on-demand text foundation models,
+  # narrowed by the search term.
+  local candidates
+  candidates=$(
+    {
+      aws --profile "$profile" bedrock list-inference-profiles \
+        --query 'inferenceProfileSummaries[?status==`ACTIVE`].inferenceProfileId' \
+        --output text 2>/dev/null | tr '\t' '\n'
+      aws --profile "$profile" bedrock list-foundation-models \
+        --by-inference-type ON_DEMAND \
+        --query "modelSummaries[?contains(outputModalities, 'TEXT')].modelId" \
+        --output text 2>/dev/null | tr '\t' '\n'
+    } | sed '/^$/d' | sort -u | rg -- "$search"
+  )
+
+  if [ -z "$candidates" ]; then
+    printf "${RED}No matching models found (SSO expired? try: aws --profile %s sso login)\n${NORMAL}" "$profile"
+    return 1
+  fi
+
+  local id out reason
+  while IFS= read -r id; do
+    out=$(aws --profile "$profile" bedrock-runtime converse \
+      --model-id "$id" \
+      --messages '[{"role":"user","content":[{"text":"ping"}]}]' \
+      --inference-config '{"maxTokens":1}' 2>&1)
+    if [ $? -eq 0 ]; then
+      printf "${GREEN}✔ %s${NORMAL}\n" "$id"
+    elif printf '%s' "$out" | grep -qiE 'AccessDenied|not authorized'; then
+      printf "${RED}✘ %s${NORMAL}  (access denied)\n" "$id"
+    else
+      # ValidationException (needs a profile / not a chat model), throttling, etc.
+      reason=$(printf '%s' "$out" | grep -oiE '[A-Za-z]+Exception' | head -1)
+      printf "${YELLOW}? %s${NORMAL}  (%s)\n" "$id" "${reason:-error}"
+    fi
+  done <<< "$candidates"
+}
+
 function memusage() {
   ps -eo size,command --sort -size | grep $1 | awk '{ hr=$1/1024 ; sum +=hr} END {print sum"MiB"}'
 }
