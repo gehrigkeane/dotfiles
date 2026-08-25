@@ -64,7 +64,7 @@
   safecrlf = true
   # prevent crlf (then you will have to deal with the problem -- dos2unix, etc)
   #safecrlf = true
-  editor = vim
+  editor = nvim
 
 [alias]
   # most commonly used
@@ -88,7 +88,7 @@
   prompt = false
 
 [diff]
-  tool = vimdiff
+  tool = nvimdiff
 
 # [init]
 #   templatedir = ~/.dotfiles/.git_template
@@ -98,7 +98,7 @@
   keepBackup = false
 
 [merge]
-  tool = vimdiff
+  tool = nvimdiff
   # Always show a diffstat at the end of a merge
   stat = true
   conflictstyle = diff3

@@ -25,6 +25,10 @@ export LESS=-JMQRiFX
 REPORTTIME=10
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
+# Keep PATH entries unique — dedupes inherited entries and any added below
+# (e.g. .profile/.shellpaths, bun). Prevents the duplicate-PATH buildup.
+typeset -U path PATH
+
 #
 # Brew completions
 #
@@ -189,7 +193,7 @@ eval "$(zoxide init zsh)"
 #
 eval "$(mise completion zsh)"
 eval "$(mise activate zsh)"
-eval "$(ln -sfn $MISE_DATA_DIR $HOME/.asdf)"
+# ~/.asdf -> $MISE_DATA_DIR symlink is managed by chezmoi (symlink_dot_asdf)
 
 #
 # git-spic
@@ -199,6 +203,16 @@ eval "$(gs shell completion zsh)"
 #
 # Custom Tools
 # eval "$(pcs completion zsh)"
+
+#
+# Atuin — SQLite shell history: fuzzy search, per-dir/session context, sync
+# ref: https://atuin.sh  (install: `brew install atuin`, then `atuin import auto`)
+# NOTE: atuin binds Ctrl-R and supersedes the zsh-fzf-history-search plugin above;
+#       once you're happy with atuin, remove that `zinit light joshskidmore/...` line.
+# Guarded so this file stays valid before atuin is installed.
+if command -v atuin >/dev/null 2>&1; then
+  eval "$(atuin init zsh)"
+fi
 
 #
 # Starship (last line)

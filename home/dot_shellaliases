@@ -8,6 +8,9 @@ alias gs="git-spice"
 alias assume=". assume"
 
 alias c="clear"
+# Neovim as the consistent editor (matches $EDITOR/$VISUAL)
+alias vim="nvim"
+alias vi="nvim"
 alias m="mise"
 alias asdf="mise"
 alias red="redic-cli"

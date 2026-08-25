@@ -1,9 +1,4 @@
 #########################################################################
-# My Scripts
-#########################################################################
-export PATH=$PATH:.
-
-#########################################################################
 # Tools
 #########################################################################
 export PATH=/usr/local/sbin:$PATH
@@ -23,7 +18,8 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$HOME/.local/bin:$PATH
 
 # Patch Node/Claude-Code self-signed errs while on VPN
-export NODE_EXTRA_CA_CERTS=/Users/gehrig/dev/fetch/cloudflare-prod-root-ca.pem
+# Stable location (not inside a git repo dir that may be moved/cleaned)
+export NODE_EXTRA_CA_CERTS=$HOME/.config/certs/cloudflare-prod-root-ca.pem
 
 #########################################################################
 # GNU Utilities

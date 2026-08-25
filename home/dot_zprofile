@@ -1,7 +1,8 @@
 ##############################################################################
-#Import the shell-agnostic (Bash or Zsh) environment config
+# Shell-agnostic env (.profile) is sourced once from ~/.zshrc — not here — to
+# avoid double-sourcing (which duplicated PATH entries). Login shells still get
+# it because ~/.zshrc runs after ~/.zprofile.
 ##############################################################################
-source ~/.profile
 
 ##############################################################################
 # History Configuration
@@ -12,7 +13,8 @@ source ~/.profile
 # Homebrew M1 artifact
 eval "$(brew shellenv)"
 
-eval "$(mise activate zsh --shims)"
+# mise: interactive activation lives in ~/.zshrc (`mise activate zsh`). Do not
+# also load shims here — running both double-munges PATH.
 
 # Added by OrbStack: command-line tools and integration
 # Comment this line if you don't want it to be added again.
