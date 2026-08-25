@@ -100,9 +100,7 @@ zinit snippet OMZ::lib/git.zsh
 zinit snippet OMZP::git
 zinit cdclear -q # <- forget completions provided by Git plugin
 
-# fzf history
-zinit ice lucid wait'0'
-zinit light joshskidmore/zsh-fzf-history-search                               # https://github.com/joshskidmore/zsh-fzf-history-search
+# (Ctrl-R history search is owned by atuin — see the Atuin block below.)
 
 #
 # fzf-tab (as tab completion)
@@ -116,9 +114,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -A1 --color=always $realpath' #
 zstyle ':fzf-tab:*' switch-group '<' '>'                                      # switch group using `<` and `>`
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup                              # tmux popup
 
-# substring search
-zinit ice lucid
-zinit light zsh-users/zsh-history-substring-search                            # https://github.com/zsh-users/zsh-history-substring-search
+# (history substring search superseded by atuin's up-arrow — see the Atuin block below.)
 
 # fzf git awesomeness
 # export FORGIT_NO_ALIASES="1"
@@ -178,9 +174,8 @@ source ~/.profile
 bindkey "^U" backward-kill-line
 bindkey "^X\\x7f" backward-kill-line
 bindkey "^X^_" redo
-# In the event of weird up and down behavior try these:
-# bindkey '^[[A' up-line-or-search
-# bindkey '^[[B' down-line-or-search
+# NOTE: up-arrow (^[[A / ^[OA) is bound by atuin (see the Atuin block below);
+# down-arrow stays zsh-native down-line-or-beginning-search.
 
 #
 # Zoxide
@@ -206,13 +201,14 @@ eval "$(gs shell completion zsh)"
 
 #
 # Atuin — SQLite shell history: fuzzy search, per-dir/session context, sync
-# ref: https://atuin.sh  (install: `brew install atuin`, then `atuin import auto`)
-# NOTE: atuin binds Ctrl-R and supersedes the zsh-fzf-history-search plugin above;
-#       once you're happy with atuin, remove that `zinit light joshskidmore/...` line.
+# ref: https://atuin.sh
+# atuin fully owns history nav: Ctrl-R (daemon-fuzzy) and up-arrow (^[[A/^[OA).
+# The up-arrow is tuned in ~/.config/atuin/config.toml to mimic the old
+# up-line-or-beginning-search: search_mode_shell_up_key_binding="prefix",
+# filter_mode_shell_up_key_binding="global", inline_height_shell_up_key_binding=15.
 # Guarded so this file stays valid before atuin is installed.
 if command -v atuin >/dev/null 2>&1; then
-  # --disable-up-arrow: atuin owns Ctrl-R only; leave ↑ as normal zsh history nav
-  eval "$(atuin init zsh --disable-up-arrow)"
+  eval "$(atuin init zsh)"
 fi
 
 #
