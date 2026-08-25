@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Neovim Quick Reference — stock defaults</title>
+<link rel="stylesheet" href="cheatsheet.css">
+</head>
+<body>
+
+<nav class="sheet-nav"><div class="inner">
+  <span class="brand">cheatsheets</span>
+  <a href="index.html">index</a>
+  <a href="zellij.html">zellij</a>
+  <a href="atuin.html">atuin</a>
+  <a href="nvim.html" class="current">nvim</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <h1>Neovim Quick Reference</h1>
+  <p>Stock <code>nvim</code> — no user config · <code>vim</code>/<code>vi</code> are aliased here to nvim</p>
+</header>
+
+<div class="insight" style="margin-top:0;">
+  <h3>This documents nvim on <em>factory defaults</em></h3>
+  <p style="margin-bottom:0;">
+    There is no <code>~/.config/nvim/</code>, so everything below is what ships built-in — no plugins, no
+    remaps of your own. Neovim's defaults are already more modern than classic vim (mouse on, live
+    substitute preview, sensible search). To make it yours: <code>:Tutor</code> for a hands-on primer,
+    <code>:checkhealth</code> to audit the install, and <code>:help nvim-defaults</code> for the exact
+    option/mapping list. Add a config at <code>~/.config/nvim/init.lua</code> when ready.
+  </p>
+</div>
+
+<nav class="toc">
+  <a href="#modes">Modes</a>
+  <a href="#motions">Motions</a>
+  <a href="#editing">Editing &amp; operators</a>
+  <a href="#objects">Text objects</a>
+  <a href="#search">Search &amp; replace</a>
+  <a href="#files">Files · buffers · windows · tabs</a>
+  <a href="#nvim-defaults">Neovim built-in defaults</a>
+  <a href="#clipboard">Clipboard</a>
+  <a href="#help">Learning it</a>
+  <a href="#insight">Insight</a>
+</nav>
+
+<section id="modes">
+  <h2>Modes</h2>
+  <table>
+    <thead><tr><th>Enter with</th><th>Mode</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Esc</kbd> / <kbd>Ctrl</kbd>+<kbd>[</kbd></td><td><strong>Normal</strong> — move &amp; run commands (home base)</td></tr>
+      <tr><td><kbd>i</kbd> <kbd>a</kbd> <kbd>I</kbd> <kbd>A</kbd> <kbd>o</kbd> <kbd>O</kbd></td><td><strong>Insert</strong> — before/after cursor, line start/end, new line below/above</td></tr>
+      <tr><td><kbd>v</kbd> / <kbd>V</kbd> / <kbd>Ctrl</kbd>+<kbd>v</kbd></td><td><strong>Visual</strong> char / line / block</td></tr>
+      <tr><td><kbd>:</kbd></td><td><strong>Command-line</strong> — Ex commands (<code>:w</code>, <code>:s</code>, …)</td></tr>
+      <tr><td><kbd>R</kbd></td><td><strong>Replace</strong> — overtype</td></tr>
+      <tr><td><code>:terminal</code></td><td><strong>Terminal</strong> — leave insert with <kbd>Ctrl</kbd>+<kbd>\</kbd> <kbd>Ctrl</kbd>+<kbd>n</kbd></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="row">
+  <div class="card" id="motions">
+    <h2>Motions</h2>
+    <table>
+      <tbody>
+        <tr><td><kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></td><td>Left / down / up / right</td></tr>
+        <tr><td><kbd>w</kbd> / <kbd>b</kbd> / <kbd>e</kbd></td><td>Word forward / back / end</td></tr>
+        <tr><td><kbd>0</kbd> / <kbd>^</kbd> / <kbd>$</kbd></td><td>Line start / first non-blank / end</td></tr>
+        <tr><td><kbd>f</kbd><em>x</em> / <kbd>t</kbd><em>x</em></td><td>Jump to / before next <em>x</em> (<kbd>;</kbd>/<kbd>,</kbd> repeat)</td></tr>
+        <tr><td><kbd>gg</kbd> / <kbd>G</kbd></td><td>Top / bottom of file (<code>NG</code> = line N)</td></tr>
+        <tr><td><kbd>{</kbd> / <kbd>}</kbd></td><td>Paragraph back / forward</td></tr>
+        <tr><td><kbd>%</kbd></td><td>Matching bracket / pair</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>d</kbd> / <kbd>Ctrl</kbd>+<kbd>u</kbd></td><td>Half-page down / up</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>f</kbd> / <kbd>Ctrl</kbd>+<kbd>b</kbd></td><td>Full page down / up</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>o</kbd> / <kbd>Ctrl</kbd>+<kbd>i</kbd></td><td>Jump list back / forward</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" id="editing">
+    <h2>Editing &amp; operators</h2>
+    <p style="margin-top:0;color:var(--fg-dim);">Operator + motion/object: <kbd>d</kbd><kbd>w</kbd>, <kbd>c</kbd><kbd>i</kbd><kbd>"</kbd>, <kbd>y</kbd><kbd>3</kbd><kbd>j</kbd>…</p>
+    <table>
+      <tbody>
+        <tr><td><kbd>x</kbd> / <kbd>d</kbd> / <kbd>c</kbd> / <kbd>y</kbd></td><td>Delete char / delete / change / yank (operators)</td></tr>
+        <tr><td><kbd>dd</kbd> <kbd>yy</kbd> <kbd>cc</kbd></td><td>Whole-line delete / yank / change</td></tr>
+        <tr><td><kbd>p</kbd> / <kbd>P</kbd></td><td>Paste after / before</td></tr>
+        <tr><td><kbd>r</kbd><em>x</em> / <kbd>R</kbd></td><td>Replace one char / replace mode</td></tr>
+        <tr><td><kbd>u</kbd> / <kbd>Ctrl</kbd>+<kbd>r</kbd></td><td>Undo / redo</td></tr>
+        <tr><td><kbd>.</kbd></td><td>Repeat last change</td></tr>
+        <tr><td><kbd>&gt;&gt;</kbd> / <kbd>&lt;&lt;</kbd></td><td>Indent / dedent line</td></tr>
+        <tr><td><kbd>gu</kbd> / <kbd>gU</kbd> / <kbd>g~</kbd></td><td>Lower / upper / toggle case (operator)</td></tr>
+        <tr><td><kbd>gc</kbd> / <kbd>gcc</kbd> <span class="pill new">nvim 0.10+</span></td><td>Comment (operator) / comment line — built-in</td></tr>
+        <tr><td><kbd>J</kbd></td><td>Join line below</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<section id="objects">
+  <h2>Text objects <span class="pill">use after an operator or in visual</span></h2>
+  <table>
+    <tbody>
+      <tr><td><kbd>iw</kbd> / <kbd>aw</kbd></td><td>Inner / a word (<kbd>diw</kbd>, <kbd>caw</kbd>)</td></tr>
+      <tr><td><kbd>i"</kbd> <kbd>i'</kbd> <kbd>i`</kbd> / a-variants</td><td>Inside / around quotes (<kbd>ci"</kbd>)</td></tr>
+      <tr><td><kbd>i(</kbd> <kbd>i{</kbd> <kbd>i[</kbd> <kbd>i&lt;</kbd> / a-variants</td><td>Inside / around brackets (<kbd>di(</kbd>, <kbd>ya{</kbd>)</td></tr>
+      <tr><td><kbd>ip</kbd> / <kbd>ap</kbd></td><td>Inner / a paragraph</td></tr>
+      <tr><td><kbd>it</kbd> / <kbd>at</kbd></td><td>Inside / around an HTML/XML tag</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="row">
+  <div class="card" id="search">
+    <h2>Search &amp; replace</h2>
+    <table>
+      <tbody>
+        <tr><td><kbd>/</kbd><em>pat</em> / <kbd>?</kbd><em>pat</em></td><td>Search forward / back (incremental — <code>incsearch</code> on)</td></tr>
+        <tr><td><kbd>n</kbd> / <kbd>N</kbd></td><td>Next / previous match</td></tr>
+        <tr><td><kbd>*</kbd> / <kbd>#</kbd></td><td>Search word under cursor fwd / back</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>l</kbd></td><td>Clear search highlight (<code>hlsearch</code> is on by default)</td></tr>
+        <tr><td><code>:s/old/new/</code></td><td>Replace first on line (<code>g</code> = all, <code>gc</code> = confirm)</td></tr>
+        <tr><td><code>:%s/old/new/g</code></td><td>Replace across the whole file</td></tr>
+        <tr><td><kbd>&amp;</kbd></td><td>Repeat last <code>:s</code> with its flags</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.86rem;color:var(--fg-dim);margin-bottom:0;">
+      <code>inccommand=nosplit</code> is on by default, so <code>:s</code> shows a <strong>live preview</strong>
+      of every match as you type the command.
+    </p>
+  </div>
+
+  <div class="card" id="files">
+    <h2>Files · buffers · windows · tabs</h2>
+    <table>
+      <tbody>
+        <tr><td><code>:w</code> <code>:q</code> <code>:wq</code> <code>:q!</code></td><td>Write / quit / write+quit / force-quit</td></tr>
+        <tr><td><code>:e </code><em>file</em></td><td>Open a file</td></tr>
+        <tr><td><code>:Ex</code> / <code>:Explore</code></td><td>netrw file browser (built-in)</td></tr>
+        <tr><td><code>:bn</code> <code>:bp</code> <code>:b#</code></td><td>Next / prev / last buffer</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>w</kbd> <kbd>s</kbd> / <kbd>v</kbd></td><td>Split horizontal / vertical</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>w</kbd> <kbd>h/j/k/l</kbd></td><td>Move between splits</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>w</kbd> <kbd>q</kbd> / <kbd>o</kbd></td><td>Close split / close others</td></tr>
+        <tr><td><code>:tabnew</code> · <kbd>gt</kbd> / <kbd>gT</kbd></td><td>New tab · next / prev tab</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<section id="nvim-defaults">
+  <h2>Neovim built-in defaults <span class="pill new">what you get free vs vim</span></h2>
+  <p style="margin-top:0;color:var(--fg-dim);">These are on out of the box — no config needed. Verified against this install (<code>:help nvim-defaults</code>).</p>
+  <table>
+    <thead><tr><th>Default</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><code>mouse=nvi</code></td><td>Mouse works in normal/visual/insert — click, select, scroll, resize splits</td></tr>
+      <tr><td><code>inccommand=nosplit</code></td><td>Live preview of <code>:s</code> substitutions as you type</td></tr>
+      <tr><td><kbd>Y</kbd> = <kbd>y</kbd><kbd>$</kbd></td><td>Yank to end of line (consistent with <kbd>C</kbd>/<kbd>D</kbd>)</td></tr>
+      <tr><td><kbd>gc</kbd> / <kbd>gcc</kbd></td><td>Built-in commenting (operator + line), comment-string per filetype</td></tr>
+      <tr><td><code>hlsearch</code> + <code>incsearch</code></td><td>Highlight matches + jump while typing (<kbd>Ctrl</kbd>+<kbd>l</kbd> clears)</td></tr>
+      <tr><td>syntax + filetype on</td><td>Highlighting and per-filetype indent/plugins enabled automatically</td></tr>
+      <tr><td><code>:terminal</code></td><td>Full terminal emulator in a buffer</td></tr>
+      <tr><td><code>:checkhealth</code> · <code>:Inspect</code></td><td>Diagnose the install · show highlight/extmark under cursor</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:.86rem;color:var(--fg-dim);margin-bottom:0;">
+    Not on by default (unlike some distros): <code>number</code> (line numbers), <code>ignorecase</code>/<code>smartcase</code>,
+    <code>termguicolors</code> (true-color — ghostty supports it, so <code>:set termguicolors</code> is worth it),
+    and system-clipboard integration (see below).
+  </p>
+</section>
+
+<section id="clipboard">
+  <h2>Clipboard <span class="pill hot">not wired by default</span></h2>
+  <p style="margin-top:0;">
+    Stock <code>clipboard</code> is empty, so plain <kbd>y</kbd>/<kbd>p</kbd> use nvim's internal registers, not the
+    macOS clipboard. Two ways across the boundary:
+  </p>
+  <table>
+    <tbody>
+      <tr><td><kbd>"</kbd><kbd>+</kbd><kbd>y</kbd> / <kbd>"</kbd><kbd>+</kbd><kbd>p</kbd></td><td>Yank / paste via the system clipboard register explicitly</td></tr>
+      <tr><td><kbd>"</kbd><kbd>*</kbd><kbd>y</kbd></td><td>Same, primary/selection register</td></tr>
+      <tr><td><code>:set clipboard=unnamedplus</code></td><td>Make <em>every</em> <kbd>y</kbd>/<kbd>p</kbd> use the system clipboard (add to a config to persist)</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:.86rem;color:var(--fg-dim);margin-bottom:0;">
+    nvim auto-detects a provider (<code>pbcopy</code>/<code>pbpaste</code> on macOS) — confirm with
+    <code>:checkhealth provider</code>.
+  </p>
+</section>
+
+<section id="help">
+  <h2>Learning it</h2>
+  <pre>:Tutor              # built-in interactive tutorial (~30 min)
+:help &lt;topic&gt;       # the manual; :help nvim-defaults for the defaults list
+:help user-manual   # table of contents for the whole guide
+:checkhealth        # audit providers, plugins, and config
+K                   # open :help for the keyword under the cursor</pre>
+</section>
+
+<div class="insight" id="insight">
+  <h3>★ Working with stock nvim</h3>
+  <ul>
+    <li><strong>The grammar is the point</strong>: <em>operator + motion/text-object</em> composes — learn <kbd>d</kbd>/<kbd>c</kbd>/<kbd>y</kbd>
+      and <kbd>iw</kbd>/<kbd>i"</kbd>/<kbd>ip</kbd> once and every combination just works. That's 80% of the power, zero config.</li>
+    <li><strong>Two quick wins worth typing every session</strong> (or putting in a future config):
+      <code>:set number</code> and <code>:set termguicolors</code> — ghostty renders true color, so the second
+      noticeably improves highlighting.</li>
+    <li><strong>Clipboard is the one rough edge</strong>: until you set <code>clipboard=unnamedplus</code>, reach for
+      <kbd>"+y</kbd>/<kbd>"+p</kbd> to cross into macOS.</li>
+    <li><strong>autolock covers you in zellij</strong>: nvim is a trigger, so zellij auto-locks and
+      <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> reaches the editor — see the zellij sheet.</li>
+  </ul>
+</div>
+
+<div class="footer">
+  Stock <code>nvim</code> — no user config · gruvbox-dark palette
+</div>
+
+</div>
+</body>
+</html>

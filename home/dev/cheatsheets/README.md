@@ -22,6 +22,7 @@ open ~/dev/cheatsheets/index.html
 | ------------- | ----------- | ----------------------------------- |
 | `zellij.html` | zellij      | `~/.config/zellij/config.kdl`       |
 | `atuin.html`  | atuin       | `~/.config/atuin/config.toml`       |
+| `nvim.html`   | neovim      | stock defaults (`:help nvim-defaults`) |
 
 ## Design
 
