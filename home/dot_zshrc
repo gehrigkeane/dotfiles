@@ -206,10 +206,7 @@ eval "$(gs shell completion zsh)"
 # The up-arrow is tuned in ~/.config/atuin/config.toml to mimic the old
 # up-line-or-beginning-search: search_mode_shell_up_key_binding="prefix",
 # filter_mode_shell_up_key_binding="global", inline_height_shell_up_key_binding=15.
-# Guarded so this file stays valid before atuin is installed.
-if command -v atuin >/dev/null 2>&1; then
-  eval "$(atuin init zsh)"
-fi
+eval "$(atuin init zsh)"
 
 #
 # Starship (last line)
