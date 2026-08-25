@@ -13,11 +13,17 @@ export PATH=/opt/homebrew/bin/:$PATH
 
 export PATH=/usr/local/bin:$PATH
 
+# Rust Binaries
+export PATH=$PATH:$HOME/.cargo/bin
+
 # Golang Binaries
 export PATH=$PATH:$GOPATH/bin
 
 # Poetry
 export PATH=$HOME/.local/bin:$PATH
+
+# Patch Node/Claude-Code self-signed errs while on VPN
+export NODE_EXTRA_CA_CERTS=/Users/gehrig/dev/fetch/cloudflare-prod-root-ca.pem
 
 #########################################################################
 # GNU Utilities

@@ -58,8 +58,8 @@ function awssm() {
 function awsso() {
   printf "${GREEN}SSOing\n${NORMAL}"
   aws sso login
-  printf "${GREEN}SSO Complete, yawsso'ing\n${NORMAL}"
-  yawsso
+  #printf "${GREEN}SSO Complete, yawsso'ing\n${NORMAL}"
+  #yawsso
 }
 
 function memusage() {
@@ -128,7 +128,6 @@ function fix_trailing_newline() {
     fi
   done
 }
-alias fta=fix_trailing_newline
 
 #########################################
 # Unused

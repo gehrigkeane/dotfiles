@@ -41,8 +41,6 @@ Plugin 'editorconfig/editorconfig-vim'
 " visual undo list
 Plugin 'sjl/gundo.vim'
 " Plugin 'majutsushi/tagbar'
-" markdown preview: opens browser with live reload when vim opens .md
-Plugin 'suan/vim-instant-markdown'
 Plugin 'godlygeek/tabular'
 " language tools
 Plugin 'scrooloose/syntastic'
@@ -348,3 +346,8 @@ let g:syntastic_pug_checkers = ['jade','pug']
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:sneak#streak = 1
 let g:airline_theme='bubblegum'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Markdown preview via glow (on-demand, terminal renderer)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+command! Glow execute '!glow -p ' . shellescape(expand('%'))

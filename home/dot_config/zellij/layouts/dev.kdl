@@ -1,0 +1,27 @@
+// Dev layout — editor on the left, shell + git status on the right.
+// Invoke with: zellij --layout dev
+layout {
+    pane split_direction="vertical" {
+        // Left 60%: editor
+        pane size="60%" name="editor" {
+            command "zsh"
+            args "-lc" "${EDITOR:-nvim} ."
+        }
+        pane split_direction="horizontal" size="40%" {
+            // Right top: shell
+            pane name="shell"
+            // Right bottom: live git status (re-invocable from the prompt)
+            pane name="git" {
+                command "zsh"
+                args "-lc" "git status --short --branch 2>&1; exec zsh"
+            }
+        }
+    }
+
+    pane size=1 borderless=true {
+        plugin location="zellij:tab-bar"
+    }
+    pane size=2 borderless=true {
+        plugin location="zjstatus"
+    }
+}

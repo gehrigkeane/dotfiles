@@ -133,3 +133,5 @@
 	template = /Users/gehrig/.git-commit-template.txt
 [init]
 	defaultBranch = main
+[url "git@github.com:fetch-rewards/"]
+	insteadOf = https://github.com/fetch-rewards/

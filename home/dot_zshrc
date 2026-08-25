@@ -74,6 +74,12 @@ zinit lucid has'docker' for \
   as'completion' is-snippet \
   'https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker'
 
+# zellij completions (generated from installed binary; cached by zinit, refreshed on `zinit update`)
+zinit ice wait'1' lucid has'zellij' as'completion' id-as'zellij-completions' \
+  atclone'zellij setup --generate-completion zsh > _zellij' \
+  atpull'%atclone' run-atpull nocompile blockf
+zinit light zdharma-continuum/null
+
 #
 # Compinit
 #
@@ -186,16 +192,23 @@ eval "$(mise activate zsh)"
 eval "$(ln -sfn $MISE_DATA_DIR $HOME/.asdf)"
 
 #
-# git-spice
+# git-spic
 # ref: https://github.com/abhinav/git-spice
 eval "$(gs shell completion zsh)"
 
 #
 # Custom Tools
-eval "$(pcs completion zsh)"
+# eval "$(pcs completion zsh)"
 
 #
 # Starship (last line)
 # ref: https://starship.rs/config
 #
 eval "$(starship init zsh)"
+
+# bun completions
+[ -s "/Users/gehrig/.bun/_bun" ] && source "/Users/gehrig/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

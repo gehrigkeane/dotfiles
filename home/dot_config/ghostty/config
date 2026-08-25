@@ -1,8 +1,11 @@
 font-family = "SauceCodePro Nerd Font Mono"
-theme = GruvboxDark
+theme = Gruvbox Dark
 background-opacity = 0.98
 confirm-close-surface=false
 
-
+macos-option-as-alt = true
 keybind = global:ctrl+space=toggle_quick_terminal
 keybind = shift+enter=text:\n
+
+quick-terminal-position = bottom
+quick-terminal-size = 50%
