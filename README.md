@@ -9,6 +9,11 @@ git clone https://github.com/gehrigkeane/dotfiles.git ~/.local/share/chezmoi
 # Chezmoi
 /opt/homebrew/bin/chezmoi apply
 
+# GH Extensions (no brew formulae exist for these)
+/opt/homebrew/bin/gh extension install dlvhdr/gh-dash    # PR/issue dashboard
+/opt/homebrew/bin/gh extension install github/gh-copilot
+/opt/homebrew/bin/gh extension install github/gh-stack
+
 # Mas
 /opt/homebrew/bin/mas install 1554235898 # Peek
 /opt/homebrew/bin/mas install 937984704  # Amphetamine

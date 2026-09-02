@@ -1,6 +1,7 @@
 #!/bin/sh
 
 alias gs="git-spice"
+alias prs="gh dash"      # gh extension dlvhdr/gh-dash
 
 #
 # Granted

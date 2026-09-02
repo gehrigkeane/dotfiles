@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://gh-dash.dev/schema.json
+#
+# gh-dash — GitHub PR/issue dashboard (gh extension dlvhdr/gh-dash)
+# Scoped to the fetch-rewards org, matching the active gh account (gehrig-fetch).
+# Intentionally no `keybindings:` block — built-in defaults only (`?` for help).
+#
+prSections:
+  - title: My PRs
+    filters: is:open author:@me org:fetch-rewards
+  - title: Needs My Review
+    filters: is:open review-requested:@me org:fetch-rewards
+  - title: Involved
+    filters: is:open involves:@me -author:@me org:fetch-rewards
+
+defaults:
+  view: prs
+  prsLimit: 30
+  preview:
+    open: true
+    width: 0.5
+
+# Maps repos to local checkouts, so PR actions resolve to the right working copy.
+repoPaths:
+  fetch-rewards/*: ~/dev/fetch/src/*
