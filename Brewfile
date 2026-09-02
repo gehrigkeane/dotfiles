@@ -1,19 +1,4 @@
 #
-# Brew Taps (see formulae below)
-#
-<<<<<<< HEAD
-
-||||||| parent of b3605a4 (mo updates)
-tap "homebrew/cask"
-tap "homebrew/cask-drivers"
-tap "homebrew/cask-fonts"
-tap "homebrew/cask-versions"
-tap "homebrew/core"
-=======
->>>>>>> b3605a4 (mo updates)
-tap "homebrew/services"
-
-#
 # Libraries and Core-Utilities
 #
 brew "bash"                                         # https://www.gnu.org/software/bash/ Bourne-Again SHell, a UNIX command interpreter
@@ -80,16 +65,7 @@ brew "crane"                                        # https://github.com/google/
 brew "dive"                                         # https://github.com/wagoodman/dive Tool for exploring each layer in a docker image
 brew "dos2unix"                                     # https://waterlan.home.xs4all.nl/dos2unix.html Convert text between DOS, UNIX, and Mac formats
 brew "dust"                                         # https://github.com/bootandy/dust More intuitive version of du in rust
-<<<<<<< HEAD
 brew "aws/tap/ec2-instance-selector"                        # https://github.com/aws/amazon-ec2-instance-selector/ EC2 Instance Selector is a tool to filter EC2 instance types based on resource criteria
-||||||| parent of b3605a4 (mo updates)
-brew "ec2-instance-selector"                        # https://github.com/aws/amazon-ec2-instance-selector/ EC2 Instance Selector is a tool to filter EC2 instance types based on resource criteria
-=======
-
-tap "aws/tap"
-brew "ec2-instance-selector"                        # https://github.com/aws/amazon-ec2-instance-selector/ EC2 Instance Selector is a tool to filter EC2 instance types based on resource criteria
-
->>>>>>> b3605a4 (mo updates)
 brew "ffmpeg"                                       # https://ffmpeg.org/ Play, record, convert, and stream audio and video
 brew "fzf"                                          # https://github.com/junegunn/fzf A command-line fuzzy finder
 brew "gh"                                           # https://cli.github.com/ GitHub command-line tool
@@ -105,16 +81,7 @@ brew "mise"                                         # https://mise.jdx.dev/ Poly
 brew "ncdu"                                         # https://dev.yorhel.nl/ncdu NCurses Disk Usage
 brew "nmap"                                         # https://nmap.org/ Port scanning utility for large networks
 brew "nvim"                                         # https://neovim.io/ Ambitious Vim-fork focused on extensibility and agility
-<<<<<<< HEAD
 brew "schappim/ocr/ocr"                                          # https://github.com/schappim/macOCR Get any text on your screen into your clipboard.
-||||||| parent of b3605a4 (mo updates)
-brew "ocr"                                          # https://github.com/schappim/macOCR Get any text on your screen into your clipboard.
-=======
-
-tap "schappim/ocr"
-brew "ocr"                                          # https://github.com/schappim/macOCR Get any text on your screen into your clipboard.
-
->>>>>>> b3605a4 (mo updates)
 brew "pgcli"                                        # https://pgcli.com/ CLI for Postgres with auto-completion and syntax highlighting
 brew "potrace"                                      # (imagemagick plugin) https://potrace.sourceforge.net/ Convert bitmaps to vector graphics
 brew "ripgrep"                                      # https://github.com/BurntSushi/ripgrep Search tool like grep and The Silver Searcher

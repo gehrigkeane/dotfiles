@@ -1,18 +1,13 @@
 #########################################################################
 # Tools
 #########################################################################
-export PATH=/usr/local/sbin:$PATH
-
 # Place homebrew binaries ahead of /usr/bin
 export PATH=/opt/homebrew/bin/:$PATH
 
 export PATH=/usr/local/bin:$PATH
 
-# Rust Binaries
-export PATH=$PATH:$HOME/.cargo/bin
-
-# Golang Binaries
-export PATH=$PATH:$GOPATH/bin
+# Golang Binaries (GOPATH is unset; fall back to go's default)
+export PATH=$PATH:${GOPATH:-$HOME/go}/bin
 
 # Poetry
 export PATH=$HOME/.local/bin:$PATH
